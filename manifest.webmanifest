@@ -2,7 +2,7 @@
   "name": "夏の献立＆お買い物リスト",
   "short_name": "夏の献立",
   "description": "夏向けの献立と買い物リストを週ごとに管理できるアプリ",
-  "start_url": "./meal_planner_summer.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#fffaf0",
