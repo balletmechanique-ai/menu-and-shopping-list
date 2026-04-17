@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夏の献立＆お買い物リスト</title>
+    <meta name="theme-color" content="#f97316">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="夏の献立">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
+    <link rel="apple-touch-icon" href="./icon-192.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // --- データ統合 (JSONをスクリプト内に配置) ---
+        const MENU_DATA = {
+            "meal_plan": {
+                "week_1": {
+                    "monday": { "main": "厚揚げピーマン味噌炒め", "side": "きんぴらごぼう" },
+                    "tuesday": { "main": "焼き魚", "side": "浅漬けと味噌汁" },
+                    "wednesday": { "main": "麻婆茄子/麻婆豆腐", "side": "小松菜の胡麻和え" },
+                    "thursday": { "main": "タンドリーチキン", "side": "ミネストローネ" },
+                    "friday": { "main": "豚こまスタミナ炒め", "side": "青菜の卵とじ味噌汁" },
+                    "saturday": { "main": "クリスピーピザ", "side": "豆とツナのサラダ" },
+                    "sunday": { "main": "冷しゃぶ", "side": "大根とツナのサラダ" }
+                },
+                "week_2": {
+                    "monday": { "main": "とんかつ", "side": "きのこのお味噌汁" },
+                    "tuesday": { "main": "生姜焼き", "side": "もやし和え" },
+                    "wednesday": { "main": "カレー", "side": "キャベツと人参のコールスロー" },
+                    "thursday": { "main": "チキングリル", "side": "豆とひじきのサラダ" },
+                    "friday": { "main": "ガパオライス", "side": "きゅうりとちくわの和え物" },
+                    "saturday": { "main": "好きなもの", "side": "" },
+                    "sunday": { "main": "ビビンバ", "side": "わかめスープ" }
+                },
+                "week_3": {
+                    "monday": { "main": "オムライス", "side": "ブロッコリーとツナのサラダ" },
+                    "tuesday": { "main": "餃子", "side": "もやしと人参のナムル" },
+                    "wednesday": { "main": "アジの南蛮漬け", "side": "具沢山のお味噌汁" },
+                    "thursday": { "main": "鶏肉と野菜のガリバタ", "side": "具沢山のコンソメスープ" },
+                    "friday": { "main": "豚キムチ", "side": "冷奴" },
+                    "saturday": { "main": "ピザ", "side": "豆とツナのサラダ" },
+                    "sunday": { "main": "唐揚げ", "side": "大根おろしとしらすの和え物" }
+                },
+                "week_4": {
+                    "monday": { "main": "カオマンガイ", "side": "青菜と油揚げのお味噌汁" },
+                    "tuesday": { "main": "豚丼", "side": "もやしサラダ" },
+                    "wednesday": { "main": "ハンバーグ/ロコモコ", "side": "大根と人参のサラダ" },
+                    "thursday": { "main": "回鍋肉", "side": "春雨サラダ" },
+                    "friday": { "main": "鶏肉とナスのさっぱり煮", "side": "きゅうりとしらすの和え物" },
+                    "saturday": { "main": "そば/うどん", "side": "かき揚げ" },
+                    "sunday": { "main": "ハヤシライス", "side": "ポテトサラダ" }
+                },
+                "week_5": {
+                    "monday": { "main": "煎り鶏", "side": "豆腐とわかめのお味噌汁" },
+                    "tuesday": { "main": "ポークチャップ", "side": "ナスのトロトロ煮浸し" },
+                    "wednesday": { "main": "フライ/コロッケ", "side": "レタスとツナのサラダ" },
+                    "thursday": { "main": "ナスと挽肉のトマトパスタ", "side": "レタスとツナのサラダ" },
+                    "friday": { "main": "シチュー", "side": "海藻サラダ" },
+                    "saturday": { "main": "好きなもの", "side": "" },
+                    "sunday": { "main": "スペアリブ", "side": "タコとセロリのマリネ" }
+                }
+            }
+        };
+
+        const INGREDIENTS = {
+            "厚揚げピーマン味噌炒め": [{ "name": "厚揚げ", "amount": 1, "unit": "枚", "cat": "other" }, { "name": "ピーマン", "amount": 3, "unit": "個", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }],
+            "きんぴらごぼう": [{ "name": "ごぼう", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true }],
+            "焼き魚": [{ "name": "旬の魚", "amount": 3, "unit": "切", "cat": "fish" }],
+            "浅漬けと味噌汁": [{ "name": "きゅうり", "amount": 1, "unit": "本", "cat": "veg", "long": true }, { "name": "豆腐", "amount": 0.5, "unit": "丁", "cat": "other" }, { "name": "わかめ", "amount": 1, "unit": "適量", "cat": "other" }],
+            "麻婆茄子": [{ "name": "茄子", "amount": 3, "unit": "本", "cat": "veg", "long": true }, { "name": "ひき肉", "amount": 150, "unit": "g", "cat": "meat" }, { "name": "長ねぎ", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }],
+            "麻婆豆腐": [{ "name": "豆腐", "amount": 1, "unit": "丁", "cat": "other" }, { "name": "ひき肉", "amount": 150, "unit": "g", "cat": "meat" }, { "name": "長ねぎ", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }],
+            "小松菜の胡麻和え": [{ "name": "小松菜", "amount": 0.5, "unit": "束", "cat": "veg" }],
+            "タンドリーチキン": [{ "name": "鶏肉", "amount": 300, "unit": "g", "cat": "meat" }],
+            "ミネストローネ": [{ "name": "トマトジュース", "amount": 0.5, "unit": "缶", "cat": "other" }, { "name": "玉ねぎ", "amount": 0.5, "unit": "個", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true }, { "name": "ベーコン", "amount": 2, "unit": "枚", "cat": "meat" }],
+            "豚こまスタミナ炒め": [{ "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "ニラ", "amount": 0.5, "unit": "束", "cat": "veg" }, { "name": "もやし", "amount": 1, "unit": "袋", "cat": "other" }],
+            "青菜の卵とじ味噌汁": [{ "name": "小松菜", "amount": 0.5, "unit": "束", "cat": "veg" }],
+            "クリスピーピザ": [{ "name": "薄力粉", "amount": 250, "unit": "g", "cat": "other" }, { "name": "ピーマン", "amount": 2, "unit": "個", "cat": "veg", "long": true }, { "name": "カルパス", "amount": 2, "unit": "本", "cat": "other" }, { "name": "ピザ用チーズ", "amount": 1, "unit": "適量", "cat": "other" }],
+            "ピザ": [{ "name": "中力粉", "amount": 280, "unit": "g", "cat": "other" }, { "name": "ピーマン", "amount": 2, "unit": "個", "cat": "veg", "long": true }, { "name": "カルパス", "amount": 2, "unit": "本", "cat": "other" }, { "name": "ピザ用チーズ", "amount": 1, "unit": "適量", "cat": "other" }],
+            "豆とツナのサラダ": [{ "name": "ミックスビーンズ", "amount": 1, "unit": "缶", "cat": "other" }, { "name": "ツナ缶", "amount": 1, "unit": "缶", "cat": "other" }],
+            "冷しゃぶ": [{ "name": "豚バラ薄切り", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "レタス", "amount": 0.25, "unit": "個", "cat": "veg", "long": true }, { "name": "きゅうり", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }, { "name": "トマト", "amount": 1, "unit": "個", "cat": "veg" }],
+            "大根とツナのサラダ": [{ "name": "大根", "amount": 5, "unit": "cm", "cat": "veg", "long": true }, { "name": "ツナ缶", "amount": 1, "unit": "缶", "cat": "other" }],
+            "とんかつ": [{ "name": "とんかつ(市販)", "amount": 1, "unit": "P", "cat": "other" }, { "name": "キャベツ", "amount": 0.25, "unit": "個", "cat": "veg", "long": true }],
+            "きのこのお味噌汁": [{ "name": "しめじ", "amount": 0.5, "unit": "P", "cat": "veg", "long": true }, { "name": "えのき", "amount": 0.5, "unit": "P", "cat": "veg", "long": true }],
+            "生姜焼き": [{ "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "玉ねぎ", "amount": 0.5, "unit": "個", "cat": "veg", "long": true }],
+            "もやし和え": [{ "name": "もやし", "amount": 1, "unit": "袋", "cat": "other" }],
+            "カレー": [{ "name": "カレー肉", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "じゃがいも", "amount": 2, "unit": "個", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }, { "name": "玉ねぎ", "amount": 1, "unit": "個", "cat": "veg", "long": true }, { "name": "カレールー", "amount": 0.5, "unit": "箱", "cat": "other" }],
+            "キャベツと人参のコールスロー": [{ "name": "キャベツ", "amount": 0.125, "unit": "個", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true }],
+            "チキングリル": [{ "name": "鶏肉", "amount": 400, "unit": "g", "cat": "meat" }],
+            "豆とひじきのサラダ": [{ "name": "ミックスビーンズ", "amount": 1, "unit": "袋", "cat": "other" }, { "name": "ひじき(ドライ)", "amount": 1, "unit": "袋", "cat": "other" }],
+            "ガパオライス": [{ "name": "ひき肉", "amount": 200, "unit": "g", "cat": "meat" }, { "name": "パプリカ", "amount": 0.5, "unit": "個", "cat": "veg" }],
+            "きゅうりとちくわの和え物": [{ "name": "きゅうり", "amount": 1, "unit": "本", "cat": "veg", "long": true }, { "name": "ちくわ", "amount": 2, "unit": "本", "cat": "other" }],
+            "ビビンバ": [{ "name": "豚こま", "amount": 200, "unit": "g", "cat": "meat" }, { "name": "ほうれん草", "amount": 0.5, "unit": "束", "cat": "veg" }, { "name": "人参", "amount": 0.3, "unit": "本", "cat": "veg", "long": true }],
+            "わかめスープ": [{ "name": "乾燥わかめ", "amount": 1, "unit": "適量", "cat": "other" }],
+            "オムライス": [{ "name": "ウインナー", "amount": 1, "unit": "袋", "cat": "meat" }, { "name": "玉ねぎ", "amount": 0.5, "unit": "個", "cat": "veg", "long": true }],
+            "ブロッコリーとツナのサラダ": [{ "name": "ブロッコリー", "amount": 0.5, "unit": "個", "cat": "veg" }],
+            "餃子": [{ "name": "餃子", "amount": 1, "unit": "P", "cat": "other" }],
+            "もやしと人参のナムル": [{ "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true }, { "name": "もやし", "amount": 1, "unit": "袋", "cat": "other" }],
+            "アジの南蛮漬け": [{ "name": "アジ", "amount": 3, "unit": "匹", "cat": "fish" }, { "name": "玉ねぎ", "amount": 0.5, "unit": "個", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }],
+            "具沢山のお味噌汁": [{ "name": "大根", "amount": 3, "unit": "cm", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true }, { "name": "豆腐", "amount": 0.5, "unit": "丁", "cat": "other" }],
+            "鶏肉と野菜のガリバタ": [{ "name": "鶏肉", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "ブロッコリー", "amount": 0.5, "unit": "個", "cat": "veg" }, { "name": "じゃがいも", "amount": 1, "unit": "個", "cat": "veg", "long": true }],
+            "具沢山のコンソメスープ": [{ "name": "ほうれん草", "amount": 0.5, "unit": "袋", "cat": "veg", "long": true }, { "name": "ベーコン", "amount": 2, "unit": "枚", "cat": "meat" }],
+            "豚キムチ": [{ "name": "豚こま", "amount": 200, "unit": "g", "cat": "meat" }, { "name": "キムチ", "amount": 1, "unit": "P", "cat": "other" }],
+            "冷奴": [{ "name": "豆腐", "amount": 1, "unit": "丁", "cat": "other" }],
+            "唐揚げ": [{ "name": "鶏肉", "amount": 500, "unit": "g", "cat": "meat" }],
+            "大根おろしとしらすの和え物": [{ "name": "大根", "amount": 3, "unit": "cm", "cat": "veg", "long": true }, { "name": "しらす", "amount": 1, "unit": "P", "cat": "other" }],
+            "カオマンガイ": [{ "name": "鶏肉", "amount": 300, "unit": "g", "cat": "meat" }, { "name": "きゅうり", "amount": 1, "unit": "本", "cat": "veg", "long": true }],
+            "青菜と油揚げのお味噌汁": [{ "name": "小松菜", "amount": 0.3, "unit": "束", "cat": "veg" }, { "name": "油揚げ", "amount": 1, "unit": "枚", "cat": "other" }],
+            "豚丼": [{ "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "玉ねぎ", "amount": 0.5, "unit": "個", "cat": "veg", "long": true }],
+            "もやしサラダ": [{ "name": "もやし", "amount": 1, "unit": "袋", "cat": "other" }, { "name": "きゅうり", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }, { "name": "ハム", "amount": 2, "unit": "枚", "cat": "meat" }],
+            "ハンバーグ": [{ "name": "ひき肉", "amount": 300, "unit": "g", "cat": "meat" }, { "name": "玉ねぎ", "amount": 0.5, "unit": "個", "cat": "veg", "long": true }],
+            "ロコモコ": [{ "name": "ひき肉", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "レタス", "amount": 0.2, "unit": "個", "cat": "veg", "long": true }],
+            "大根と人参のサラダ": [{ "name": "大根", "amount": 3, "unit": "cm", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true }],
+            "回鍋肉": [{ "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "キャベツ", "amount": 0.25, "unit": "個", "cat": "veg", "long": true }, { "name": "ピーマン", "amount": 3, "unit": "個", "cat": "veg", "long": true }],
+            "春雨サラダ": [{ "name": "春雨", "amount": 30, "unit": "g", "cat": "other" }, { "name": "きゅうり", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }, { "name": "ハム", "amount": 4, "unit": "枚", "cat": "meat", "long": true }],
+            "鶏肉とナスのさっぱり煮": [{ "name": "鶏肉", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "茄子", "amount": 2, "unit": "本", "cat": "veg", "long": true }],
+            "きゅうりとしらすの和え物": [{ "name": "きゅうり", "amount": 1, "unit": "本", "cat": "veg", "long": true }, { "name": "しらす", "amount": 1, "unit": "P", "cat": "other" }],
+            "そば": [{ "name": "そば", "amount": 2, "unit": "玉", "cat": "other" }],
+            "うどん": [{ "name": "うどん", "amount": 2, "unit": "玉", "cat": "other" }],
+            "かき揚げ": [{ "name": "かき揚げ(市販)", "amount": 1, "unit": "P", "cat": "other" }],
+            "ハヤシライス": [{ "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "玉ねぎ", "amount": 1, "unit": "個", "cat": "veg", "long": true }, { "name": "ハヤシルー", "amount": 0.5, "unit": "箱", "cat": "other" }],
+            "ポテトサラダ": [{ "name": "じゃがいも", "amount": 2, "unit": "個", "cat": "veg", "long": true }, { "name": "ハム", "amount": 2, "unit": "枚", "cat": "meat" }],
+            "煎り鶏": [{ "name": "鶏肉", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "ごぼう", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }, { "name": "蓮根", "amount": 100, "unit": "g", "cat": "veg", "long": true }],
+            "豆腐とわかめのお味噌汁": [{ "name": "豆腐", "amount": 0.5, "unit": "丁", "cat": "other" }, { "name": "乾燥わかめ", "amount": 1, "unit": "適量", "cat": "other" }],
+            "ポークチャップ": [{ "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" }],
+            "ナスのトロトロ煮浸し": [{ "name": "茄子", "amount": 3, "unit": "本", "cat": "veg", "long": true }],
+            "フライ": [{ "name": "フライ(市販)", "amount": 1, "unit": "P", "cat": "other" }],
+            "コロッケ": [{ "name": "コロッケ(市販)", "amount": 1, "unit": "P", "cat": "other" }],
+            "レタスとツナのサラダ": [{ "name": "レタス", "amount": 0.2, "unit": "個", "cat": "veg", "long": true }, { "name": "ツナ缶", "amount": 1, "unit": "缶", "cat": "other" }],
+            "ナスと挽肉のトマトパスタ": [{ "name": "ひき肉", "amount": 150, "unit": "g", "cat": "meat" }, { "name": "パスタ", "amount": 200, "unit": "g", "cat": "other" }, { "name": "茄子", "amount": 2, "unit": "本", "cat": "veg", "long": true }],
+            "シチュー": [{ "name": "シチュー肉", "amount": 250, "unit": "g", "cat": "meat" }, { "name": "じゃがいも", "amount": 2, "unit": "個", "cat": "veg", "long": true }, { "name": "人参", "amount": 0.5, "unit": "本", "cat": "veg", "long": true }, { "name": "玉ねぎ", "amount": 1, "unit": "個", "cat": "veg", "long": true }, { "name": "シチュールー", "amount": 0.5, "unit": "箱", "cat": "other" }],
+            "海藻サラダ": [{ "name": "海藻ミックス", "amount": 1, "unit": "袋", "cat": "other" }],
+            "スペアリブ": [{ "name": "豚スペアリブ", "amount": 5, "unit": "本", "cat": "meat" }],
+            "タコとセロリのマリネ": [{ "name": "タコ", "amount": 100, "unit": "g", "cat": "fish" }, { "name": "セロリ", "amount": 0.5, "unit": "本", "cat": "veg" }]
+        };
+
+        // --- 状態管理 ---
+        let savedChecks = JSON.parse(localStorage.getItem('meal_planner_summer_checks') || "{}");
+        let selectedMeals = JSON.parse(localStorage.getItem('meal_planner_summer_selected') || "{}");
+
+        function saveToLocal() {
+            localStorage.setItem('meal_planner_summer_checks', JSON.stringify(savedChecks));
+            localStorage.setItem('meal_planner_summer_selected', JSON.stringify(selectedMeals));
+        }
+
+        let currentWeek = 1;
+        let prevWeekSource = 5;
+        const EXCLUDE_LIST = ["牛乳", "卵", "もやし"];
+        let RAW_DATA = [];
+
+        function initData() {
+            // RAW_DATA形式に変換
+            RAW_DATA = Object.keys(MENU_DATA.meal_plan).map(key => {
+                const weekNum = parseInt(key.replace('week_', ''));
+                const days = MENU_DATA.meal_plan[key];
+                const menu = [
+                    { day: "月", ...days.monday },
+                    { day: "火", ...days.tuesday },
+                    { day: "水", ...days.wednesday },
+                    { day: "木", ...days.thursday },
+                    { day: "金", ...days.friday },
+                    { day: "土", ...days.saturday },
+                    { day: "日", ...days.sunday }
+                ];
+                return { week: weekNum, menu };
+            });
+            render();
+        }
+
+        window.toggleCheck = (id) => {
+            savedChecks[id] = document.getElementById(id).checked;
+            saveToLocal(); 
+            render();
+        };
+
+        window.toggleMealSelection = (week, dayIndex, optionsStr) => {
+            const options = optionsStr.split('/');
+            const key = `w${week}-d${dayIndex}`;
+            const current = selectedMeals[key] || options[0];
+            const nextIndex = (options.indexOf(current) + 1) % options.length;
+            selectedMeals[key] = options[nextIndex];
+            saveToLocal(); 
+            render();
+        };
+
+        window.changeWeek = (w) => { currentWeek = w; render(); };
+        window.changePrevWeekSource = (w) => { prevWeekSource = w; render(); };
+
+        window.resetCurrentWeek = () => {
+            const modal = document.getElementById('confirm-modal');
+            modal.classList.remove('hidden');
+            window.pendingReset = "current";
+        };
+
+        window.resetAllData = () => {
+            const modal = document.getElementById('confirm-modal');
+            modal.classList.remove('hidden');
+            window.pendingReset = "all";
+        };
+
+        window.closeModal = () => {
+            document.getElementById('confirm-modal').classList.add('hidden');
+        };
+
+        window.confirmReset = () => {
+            if (window.pendingReset === "current") {
+                const prefix = `w${currentWeek}-`;
+                Object.keys(savedChecks).forEach(k => { if (k.startsWith(prefix)) delete savedChecks[k]; });
+            } else {
+                savedChecks = {};
+                selectedMeals = {};
+            }
+            saveToLocal(); 
+            render();
+            window.closeModal();
+        };
+
+        function render() {
+            if (RAW_DATA.length === 0) return;
+            
+            for(let i=1; i<=5; i++) {
+                const tab = document.getElementById(`tab-${i}`);
+                if (tab) tab.classList.toggle('tab-active', i === currentWeek);
+            }
+
+            const weekData = RAW_DATA.find(d => d.week === currentWeek);
+            let targetPrevWeek = currentWeek === 1 ? prevWeekSource : currentWeek - 1;
+            const prevWeekData = RAW_DATA.find(d => d.week === targetPrevWeek);
+            
+            const menuList = document.getElementById('menu-list');
+            menuList.innerHTML = '';
+            weekData.menu.forEach((item, idx) => {
+                const mainDisp = getSelectedItem(currentWeek, idx, 'main', item.main);
+                const sideDisp = getSelectedItem(currentWeek, idx, 'side', item.side);
+                const isMainMultiple = item.main.includes('/');
+                const isSideMultiple = item.side && item.side.includes('/');
+                
+                const div = document.createElement('div');
+                div.className = "bg-white p-3 rounded-xl shadow-sm border border-slate-100 mb-2";
+                div.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <span class="w-8 h-8 flex items-center justify-center bg-orange-100 rounded-full text-xs font-bold text-orange-600 flex-shrink-0">${item.day}</span>
+                        <div class="flex-grow min-w-0">
+                            <p class="text-sm font-bold text-slate-800 flex items-center flex-wrap">
+                                <span class="truncate">${mainDisp}</span>
+                                ${isMainMultiple ? `<button onclick="toggleMealSelection(${currentWeek}, ${idx}, '${item.main}')" class="ml-2 text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-100 no-print">切替</button>` : ''}
+                            </p>
+                            <p class="text-xs text-slate-500 flex items-center mt-0.5 flex-wrap">
+                                <span class="truncate">${sideDisp || '-'}</span>
+                                ${isSideMultiple ? `<button onclick="toggleMealSelection(${currentWeek}, ${idx}, '${item.side}')" class="ml-2 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 no-print">切替</button>` : ''}
+                            </p>
+                        </div>
+                    </div>`;
+                menuList.appendChild(div);
+            });
+
+            const seikyoItems = new Map();
+            const superItems = new Map();
+
+            weekData.menu.forEach((item, idx) => {
+                const mainName = getSelectedItem(currentWeek, idx, 'main', item.main);
+                const sideName = getSelectedItem(currentWeek, idx, 'side', item.side);
+                [mainName, sideName].forEach(dishName => {
+                    if (!dishName) return;
+                    (INGREDIENTS[dishName] || []).forEach(ing => {
+                        if (EXCLUDE_LIST.includes(ing.name)) return;
+                        if ((idx < 5 && ing.cat === 'veg') || (ing.cat === 'veg' && ing.long)) aggregateIntoMap(seikyoItems, ing, dishName);
+                        else if (idx < 5) aggregateIntoMap(superItems, ing, dishName);
+                    });
+                });
+            });
+
+            if (prevWeekData) {
+                prevWeekData.menu.slice(5, 7).forEach((item, idx) => {
+                    const actualIdx = idx + 5;
+                    const mainName = getSelectedItem(targetPrevWeek, actualIdx, 'main', item.main);
+                    const sideName = getSelectedItem(targetPrevWeek, actualIdx, 'side', item.side);
+                    [mainName, sideName].forEach(dishName => {
+                        if (!dishName) return;
+                        (INGREDIENTS[dishName] || []).forEach(ing => {
+                            if (!EXCLUDE_LIST.includes(ing.name) && !(ing.cat === 'veg' && ing.long)) aggregateIntoMap(superItems, ing, dishName);
+                        });
+                    });
+                });
+            }
+
+            const weekOptionArea = document.getElementById('week-option-area');
+            if (weekOptionArea && currentWeek === 1) {
+                weekOptionArea.innerHTML = `<div class="bg-blue-100/50 p-2 rounded text-[10px] text-blue-800 flex items-center gap-2 mb-3"><span>前週参照:</span><button onclick="changePrevWeekSource(4)" class="px-2 py-0.5 rounded ${prevWeekSource === 4 ? 'bg-blue-600 text-white' : 'bg-white border border-blue-200'}">第4週</button><button onclick="changePrevWeekSource(5)" class="px-2 py-0.5 rounded ${prevWeekSource === 5 ? 'bg-blue-600 text-white' : 'bg-white border border-blue-200'}">第5週</button></div>`;
+            } else if (weekOptionArea) weekOptionArea.innerHTML = '';
+
+            renderList('seikyo-list', seikyoItems, 'seikyo');
+            renderList('super-list', superItems, 'super');
+        }
+
+        function getSelectedItem(week, dayIdx, type, originalStr) {
+            if (!originalStr) return "";
+            const options = originalStr.split('/');
+            if (options.length === 1) return options[0];
+            const key = `w${week}-d${dayIdx}`;
+            return selectedMeals[key] || options[0];
+        }
+
+        function aggregateIntoMap(map, ing, dishName) {
+            if (!map.has(ing.name)) map.set(ing.name, { amount: 0, unit: ing.unit, dishes: new Set() });
+            const entry = map.get(ing.name); 
+            entry.amount += ing.amount; 
+            entry.dishes.add(dishName);
+        }
+
+        function renderList(id, dataMap, type) {
+            const el = document.getElementById(id);
+            el.innerHTML = dataMap.size === 0 ? '<li class="text-slate-400 italic text-xs">特になし</li>' : '';
+            Array.from(dataMap.keys()).sort().forEach(name => {
+                const data = dataMap.get(name);
+                const dishesText = Array.from(data.dishes).join('、');
+                let displayAmount = typeof data.amount === 'number' ? Math.round(data.amount * 100) / 100 : data.amount;
+                const amountText = (data.unit === '適量' || data.unit === 'P' || data.unit === '缶' || data.unit === '袋' || data.unit === '玉' || data.unit === '箱') ? data.unit : `${displayAmount}${data.unit}`;
+                const checkId = `w${currentWeek}-${type}-${name}`;
+                const isChecked = savedChecks[checkId] === true;
+                const li = document.createElement('li');
+                li.className = "flex items-start py-2 border-b border-black/5 last:border-0";
+                li.innerHTML = `
+                    <input type="checkbox" id="${checkId}" onchange="toggleCheck('${checkId}')" ${isChecked ? 'checked' : ''} class="mt-1 mr-3 w-5 h-5 rounded text-blue-500 flex-shrink-0 cursor-pointer">
+                    <label for="${checkId}" class="leading-tight cursor-pointer font-medium flex-grow ${isChecked ? 'line-through text-slate-400 opacity-60' : 'text-slate-700'}">
+                        ${name} <span class="text-blue-600 font-bold ml-1">${amountText}</span>
+                        <span class="text-[10px] text-slate-400 block mt-1">(${dishesText})</span>
+                    </label>
+                `;
+                el.appendChild(li);
+            });
+        }
+
+        window.onload = initData;
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            background-color: #fffaf0; 
+            -webkit-tap-highlight-color: transparent; 
+            overscroll-behavior-y: contain;
+        }
+        .tab-active { border-bottom: 3px solid #f97316; color: #f97316; }
+        @media print { .no-print { display: none !important; } }
+        /* カスタムスクロールバーの非表示（モバイル向け） */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="p-4 sm:p-8 text-slate-900">
+    <div id="app" class="max-w-4xl mx-auto">
+        <header class="mb-6">
+            <h1 class="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">🌻 夏の献立カレンダー</h1>
+            <p class="text-slate-500 text-xs sm:text-sm mt-1">野菜たっぷり・平日野菜は生協へ</p>
+            
+            <div class="flex gap-2 mt-4 no-print overflow-x-auto no-scrollbar">
+                <button onclick="resetCurrentWeek()" class="whitespace-nowrap bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg text-xs font-medium border border-orange-200 active:bg-orange-100 transition">今週クリア</button>
+                <button onclick="resetAllData()" class="whitespace-nowrap bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-xs font-medium border border-red-200 active:bg-red-100 transition">全リセット</button>
+                <button onclick="window.print()" class="whitespace-nowrap bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium active:bg-slate-300">印刷</button>
+            </div>
+        </header>
+
+        <!-- タブナビゲーション -->
+        <div class="flex space-x-1 sm:space-x-4 mb-6 border-b border-slate-200 no-print overflow-x-auto no-scrollbar pb-px">
+            <button onclick="changeWeek(1)" id="tab-1" class="px-3 py-2 font-bold transition whitespace-nowrap border-b-2 border-transparent text-sm sm:text-base">第1週</button>
+            <button onclick="changeWeek(2)" id="tab-2" class="px-3 py-2 font-bold transition whitespace-nowrap border-b-2 border-transparent text-sm sm:text-base">第2週</button>
+            <button onclick="changeWeek(3)" id="tab-3" class="px-3 py-2 font-bold transition whitespace-nowrap border-b-2 border-transparent text-sm sm:text-base">第3週</button>
+            <button onclick="changeWeek(4)" id="tab-4" class="px-3 py-2 font-bold transition whitespace-nowrap border-b-2 border-transparent text-sm sm:text-base">第4週</button>
+            <button onclick="changeWeek(5)" id="tab-5" class="px-3 py-2 font-bold transition whitespace-nowrap border-b-2 border-transparent text-sm sm:text-base">第5週</button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- 献立セクション -->
+            <div class="lg:col-span-5">
+                <h2 class="text-lg font-bold text-slate-700 mb-4 flex items-center">
+                    <span class="mr-2">📅</span> 今週の献立
+                </h2>
+                <div id="menu-list"></div>
+            </div>
+
+            <!-- お買い物リストセクション -->
+            <div class="lg:col-span-7">
+                <h2 class="text-lg font-bold text-slate-700 mb-4 flex items-center">
+                    <span class="mr-2">🛒</span> お買い物リスト
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
+                    <!-- 生協 -->
+                    <div class="bg-orange-50 border border-orange-100 rounded-3xl p-5 shadow-sm">
+                        <h3 class="text-orange-700 font-bold mb-4 text-sm sm:text-base border-b border-orange-200 pb-2 flex items-center justify-between">
+                            生協 (月〜金野菜)
+                            <span class="text-[10px] font-normal bg-orange-200 text-orange-800 px-2 py-0.5 rounded-full">配送</span>
+                        </h3>
+                        <ul id="seikyo-list" class="space-y-1 text-sm"></ul>
+                    </div>
+                    <!-- スーパー -->
+                    <div class="bg-blue-50 border border-blue-100 rounded-3xl p-5 shadow-sm">
+                        <h3 class="text-blue-700 font-bold mb-2 text-sm sm:text-base border-b border-blue-200 pb-2 flex items-center justify-between">
+                            スーパー (その他)
+                            <span class="text-[10px] font-normal bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full">店舗</span>
+                        </h3>
+                        <div id="week-option-area" class="no-print"></div>
+                        <ul id="super-list" class="space-y-1 text-sm"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- コピーライト/フッター -->
+        <footer class="mt-12 text-center text-slate-400 text-[10px] pb-8">
+            Summer Meal Planner v2.0 - Local Storage Enabled
+        </footer>
+    </div>
+
+    <!-- モーダル（確認用） -->
+    <div id="confirm-modal" class="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-2xl p-6 max-w-xs w-full shadow-2xl">
+            <h3 class="text-lg font-bold mb-2">確認</h3>
+            <p class="text-slate-600 text-sm mb-6">この操作は取り消せません。実行しますか？</p>
+            <div class="flex gap-3">
+                <button onclick="closeModal()" class="flex-grow py-2 bg-slate-100 text-slate-600 rounded-xl font-bold">戻る</button>
+                <button onclick="confirmReset()" class="flex-grow py-2 bg-red-500 text-white rounded-xl font-bold">実行</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js').catch((error) => {
+                console.error('Service Worker registration failed:', error);
+            });
+        });
+    }
+</script>
+</html>

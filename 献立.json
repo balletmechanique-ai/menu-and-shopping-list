@@ -1,0 +1,49 @@
+{
+  "meal_plan": {
+    "week_1": {
+      "monday": { "main": "厚揚げピーマン味噌炒め", "side": "きんぴらごぼう" },
+      "tuesday": { "main": "焼き魚", "side": "浅漬けと味噌汁" },
+      "wednesday": { "main": "麻婆茄子/麻婆豆腐", "side": "小松菜の胡麻和え" },
+      "thursday": { "main": "タンドリーチキン", "side": "ミネストローネ" },
+      "friday": { "main": "豚こまスタミナ炒め", "side": "青菜の卵とじ味噌汁" },
+      "saturday": { "main": "クリスピーピザ", "side": "豆とツナのサラダ" },
+      "sunday": { "main": "冷しゃぶ", "side": "大根とツナのサラダ" }
+    },
+    "week_2": {
+      "monday": { "main": "とんかつ", "side": "きのこのお味噌汁" },
+      "tuesday": { "main": "生姜焼き", "side": "もやし和え" },
+      "wednesday": { "main": "カレー", "side": "キャベツと人参のコールスロー" },
+      "thursday": { "main": "チキングリル", "side": "豆とひじきのサラダ" },
+      "friday": { "main": "ガパオライス", "side": "きゅうりとちくわの和え物" },
+      "saturday": { "main": "好きなもの", "side": "" },
+      "sunday": { "main": "ビビンバ", "side": "わかめスープ" }
+    },
+    "week_3": {
+      "monday": { "main": "オムライス", "side": "ブロッコリーとツナのサラダ" },
+      "tuesday": { "main": "餃子", "side": "もやしと人参のナムル" },
+      "wednesday": { "main": "アジの南蛮漬け", "side": "具沢山のお味噌汁" },
+      "thursday": { "main": "鶏肉と野菜のガリバタ", "side": "具沢山のコンソメスープ" },
+      "friday": { "main": "豚キムチ", "side": "冷奴" },
+      "saturday": { "main": "ピザ", "side": "豆とツナのサラダ" },
+      "sunday": { "main": "唐揚げ", "side": "大根おろしとしらすの和え物" }
+    },
+    "week_4": {
+      "monday": { "main": "カオマンガイ", "side": "青菜と油揚げのお味噌汁" },
+      "tuesday": { "main": "豚丼", "side": "もやしサラダ" },
+      "wednesday": { "main": "ハンバーグ/ロコモコ", "side": "大根と人参のサラダ" },
+      "thursday": { "main": "回鍋肉", "side": "春雨サラダ" },
+      "friday": { "main": "鶏肉とナスのさっぱり煮", "side": "きゅうりとしらすの和え物" },
+      "saturday": { "main": "そば/うどん", "side": "かき揚げ" },
+      "sunday": { "main": "ハヤシライス", "side": "ポテトサラダ" }
+    },
+    "week_5": {
+      "monday": { "main": "煎り鶏", "side": "豆腐とわかめのお味噌汁" },
+      "tuesday": { "main": "ポークチャップ", "side": "ナスのトロトロ煮浸し" },
+      "wednesday": { "main": "フライ/コロッケ", "side": "レタスとツナのサラダ" },
+      "thursday": { "main": "ナスと挽肉のトマトパスタ", "side": "レタスとツナのサラダ" },
+      "friday": { "main": "シチュー", "side": "海藻サラダ" },
+      "saturday": { "main": "好きなもの", "side": "" },
+      "sunday": { "main": "スペアリブ", "side": "タコとセロリのマリネ" }
+    }
+  }
+}

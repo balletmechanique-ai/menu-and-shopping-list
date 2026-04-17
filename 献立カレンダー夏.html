@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5週間の献立表（夏） - 柔らかカラー</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f4fafb; /* 涼しげなミントホワイト */
+            color: #4a5a62;
+            line-height: 1.1;
+        }
+
+        .calendar-table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .calendar-table th, .calendar-table td {
+            border: 1px solid #a8c9d4;
+            text-align: center;
+            vertical-align: middle;
+            padding: 2px;
+        }
+
+        /* 曜日ごとの柔らかい色分け（夏・クールトーン） */
+        .day-header { font-size: 0.9rem; font-weight: bold; padding: 10px 0 !important; color: #2d4a52; }
+        .col-mon { background-color: #eef8f6; } /* ミント */
+        .col-tue { background-color: #f0f7fc; } /* アイスブルー */
+        .col-wed { background-color: #fbfdf0; } /* レモンクリーム */
+        .col-thu { background-color: #fff8f0; } /* ピーチクリーム */
+        .col-fri { background-color: #eef6f8; } /* シーグラス */
+        .col-sat { background-color: #eaf4ff; } /* スカイ */
+        .col-sun { background-color: #fff5f7; } /* ソフトコーラル */
+
+        .week-label {
+            background-color: #dceef2;
+            font-weight: bold;
+            font-size: 1rem;
+            width: 45px;
+            color: #3d6b78;
+            border-right: 2px solid #a8c9d4 !important;
+        }
+
+        .main-dish-container {
+            min-height: 3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+
+        .bg-mon { background-color: #e4f4f1; }
+        .bg-tue { background-color: #e8f2fa; }
+        .bg-wed { background-color: #f5f8e8; }
+        .bg-thu { background-color: #faf3e8; }
+        .bg-fri { background-color: #e3eef2; }
+        .bg-sat { background-color: #ddeaf8; }
+        .bg-sun { background-color: #fceef1; }
+
+        .main-dish-text {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #333333;
+        }
+
+        .side-dish-container {
+            font-size: 0.72rem;
+            color: #5d5d5d;
+            padding: 5px 2px;
+            background-color: #ffffff;
+            border-top: 1px solid #d4e4ea;
+        }
+
+        .week-group-border {
+            border-top: 4px solid #a8c9d4 !important;
+        }
+
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 5mm;
+            }
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            .no-print {
+                display: none;
+            }
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .main-dish-text { font-size: 0.95rem; }
+            .side-dish-container { font-size: 0.78rem; }
+            .calendar-table {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body class="p-2 md:p-4">
+
+    <div class="max-w-full mx-auto container">
+        <div class="flex justify-between items-end mb-2 no-print">
+            <h2 class="text-lg font-bold text-cyan-800 ml-1 italic">Kitchen Menu Calendar · 夏</h2>
+            <button onclick="window.print()" class="bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-2 rounded-full shadow-sm flex items-center gap-2 text-sm font-bold transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                きれいに印刷する
+            </button>
+        </div>
+
+        <div class="shadow-md rounded-md overflow-hidden border border-cyan-100">
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th class="bg-cyan-50 text-cyan-600 text-[10px]" style="width: 40px;">週</th>
+                        <th class="day-header col-mon">月</th>
+                        <th class="day-header col-tue">火</th>
+                        <th class="day-header col-wed">水</th>
+                        <th class="day-header col-thu">木</th>
+                        <th class="day-header col-fri">金</th>
+                        <th class="day-header col-sat">土</th>
+                        <th class="day-header col-sun">日</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 1週目 -->
+                    <tr>
+                        <td rowspan="2" class="week-label">1</td>
+                        <td class="bg-mon"><div class="main-dish-container"><span class="main-dish-text">厚揚げピーマン味噌炒め</span></div></td>
+                        <td class="bg-tue"><div class="main-dish-container"><span class="main-dish-text">焼き魚</span></div></td>
+                        <td class="bg-wed"><div class="main-dish-container"><span class="main-dish-text">麻婆茄子 / 麻婆豆腐</span></div></td>
+                        <td class="bg-thu"><div class="main-dish-container"><span class="main-dish-text">タンドリーチキン</span></div></td>
+                        <td class="bg-fri"><div class="main-dish-container"><span class="main-dish-text">豚こまスタミナ炒め</span></div></td>
+                        <td class="bg-sat"><div class="main-dish-container"><span class="main-dish-text text-blue-500">クリスピーピザ</span></div></td>
+                        <td class="bg-sun"><div class="main-dish-container"><span class="main-dish-text text-rose-500">冷しゃぶ</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="side-dish-container">きんぴらごぼう</div></td>
+                        <td><div class="side-dish-container">浅漬けと味噌汁</div></td>
+                        <td><div class="side-dish-container">小松菜の胡麻和え</div></td>
+                        <td><div class="side-dish-container">ミネストローネ</div></td>
+                        <td><div class="side-dish-container">青菜の卵とじ味噌汁</div></td>
+                        <td><div class="side-dish-container">豆とツナのサラダ</div></td>
+                        <td><div class="side-dish-container">大根とツナのサラダ</div></td>
+                    </tr>
+
+                    <!-- 2週目 -->
+                    <tr class="week-group-border">
+                        <td rowspan="2" class="week-label">2</td>
+                        <td class="bg-mon"><div class="main-dish-container"><span class="main-dish-text">とんかつ</span></div></td>
+                        <td class="bg-tue"><div class="main-dish-container"><span class="main-dish-text">生姜焼き</span></div></td>
+                        <td class="bg-wed"><div class="main-dish-container"><span class="main-dish-text">カレー</span></div></td>
+                        <td class="bg-thu"><div class="main-dish-container"><span class="main-dish-text">チキングリル</span></div></td>
+                        <td class="bg-fri"><div class="main-dish-container"><span class="main-dish-text">ガパオライス</span></div></td>
+                        <td class="bg-sat"><div class="main-dish-container"><span class="main-dish-text text-blue-500">好きなもの</span></div></td>
+                        <td class="bg-sun"><div class="main-dish-container"><span class="main-dish-text text-rose-500">ビビンバ</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="side-dish-container">きのこのお味噌汁</div></td>
+                        <td><div class="side-dish-container">もやし和え</div></td>
+                        <td><div class="side-dish-container">キャベツと人参のコールスロー</div></td>
+                        <td><div class="side-dish-container">豆とひじきのサラダ</div></td>
+                        <td><div class="side-dish-container">きゅうりとちくわの和え物</div></td>
+                        <td><div class="side-dish-container">-</div></td>
+                        <td><div class="side-dish-container">わかめスープ</div></td>
+                    </tr>
+
+                    <!-- 3週目 -->
+                    <tr class="week-group-border">
+                        <td rowspan="2" class="week-label">3</td>
+                        <td class="bg-mon"><div class="main-dish-container"><span class="main-dish-text">オムライス</span></div></td>
+                        <td class="bg-tue"><div class="main-dish-container"><span class="main-dish-text">餃子</span></div></td>
+                        <td class="bg-wed"><div class="main-dish-container"><span class="main-dish-text">アジの南蛮漬け</span></div></td>
+                        <td class="bg-thu"><div class="main-dish-container"><span class="main-dish-text">鶏肉と野菜のガリバタ</span></div></td>
+                        <td class="bg-fri"><div class="main-dish-container"><span class="main-dish-text">豚キムチ</span></div></td>
+                        <td class="bg-sat"><div class="main-dish-container"><span class="main-dish-text text-blue-500">ピザ</span></div></td>
+                        <td class="bg-sun"><div class="main-dish-container"><span class="main-dish-text text-rose-500">唐揚げ</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="side-dish-container">ブロッコリーとツナのサラダ</div></td>
+                        <td><div class="side-dish-container">もやしと人参のナムル</div></td>
+                        <td><div class="side-dish-container">具沢山のお味噌汁</div></td>
+                        <td><div class="side-dish-container">具沢山のコンソメスープ</div></td>
+                        <td><div class="side-dish-container">冷奴</div></td>
+                        <td><div class="side-dish-container">豆とツナのサラダ</div></td>
+                        <td><div class="side-dish-container">大根おろしとしらすの和え物</div></td>
+                    </tr>
+
+                    <!-- 4週目 -->
+                    <tr class="week-group-border">
+                        <td rowspan="2" class="week-label">4</td>
+                        <td class="bg-mon"><div class="main-dish-container"><span class="main-dish-text">カオマンガイ</span></div></td>
+                        <td class="bg-tue"><div class="main-dish-container"><span class="main-dish-text">豚丼</span></div></td>
+                        <td class="bg-wed"><div class="main-dish-container"><span class="main-dish-text">ハンバーグ / ロコモコ</span></div></td>
+                        <td class="bg-thu"><div class="main-dish-container"><span class="main-dish-text">回鍋肉</span></div></td>
+                        <td class="bg-fri"><div class="main-dish-container"><span class="main-dish-text">鶏肉とナスのさっぱり煮</span></div></td>
+                        <td class="bg-sat"><div class="main-dish-container"><span class="main-dish-text text-blue-500">そば / うどん</span></div></td>
+                        <td class="bg-sun"><div class="main-dish-container"><span class="main-dish-text text-rose-500">ハヤシライス</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="side-dish-container">青菜と油揚げのお味噌汁</div></td>
+                        <td><div class="side-dish-container">もやしサラダ</div></td>
+                        <td><div class="side-dish-container">大根と人参のサラダ</div></td>
+                        <td><div class="side-dish-container">春雨サラダ</div></td>
+                        <td><div class="side-dish-container">きゅうりとしらすの和え物</div></td>
+                        <td><div class="side-dish-container">かき揚げ</div></td>
+                        <td><div class="side-dish-container">ポテトサラダ</div></td>
+                    </tr>
+
+                    <!-- 5週目 -->
+                    <tr class="week-group-border">
+                        <td rowspan="2" class="week-label">5</td>
+                        <td class="bg-mon"><div class="main-dish-container"><span class="main-dish-text">煎り鶏</span></div></td>
+                        <td class="bg-tue"><div class="main-dish-container"><span class="main-dish-text">ポークチャップ</span></div></td>
+                        <td class="bg-wed"><div class="main-dish-container"><span class="main-dish-text">フライ / コロッケ</span></div></td>
+                        <td class="bg-thu"><div class="main-dish-container"><span class="main-dish-text">ナスと挽肉のトマトパスタ</span></div></td>
+                        <td class="bg-fri"><div class="main-dish-container"><span class="main-dish-text">シチュー</span></div></td>
+                        <td class="bg-sat"><div class="main-dish-container"><span class="main-dish-text text-blue-500">好きなもの</span></div></td>
+                        <td class="bg-sun"><div class="main-dish-container"><span class="main-dish-text text-rose-500">スペアリブ</span></div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="side-dish-container">豆腐とわかめのお味噌汁</div></td>
+                        <td><div class="side-dish-container">ナスのトロトロ煮浸し</div></td>
+                        <td><div class="side-dish-container">レタスとツナのサラダ</div></td>
+                        <td><div class="side-dish-container">レタスとツナのサラダ</div></td>
+                        <td><div class="side-dish-container">海藻サラダ</div></td>
+                        <td><div class="side-dish-container">-</div></td>
+                        <td><div class="side-dish-container">タコとセロリのマリネ</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
