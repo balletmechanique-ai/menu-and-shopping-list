@@ -1,7 +1,7 @@
-const CACHE_NAME = "meal-planner-summer-v1";
+const CACHE_NAME = "meal-planner-summer-v2";
 const APP_SHELL = [
     "./",
-    "./meal_planner_summer.html",
+    "./index.html",
     "./manifest.webmanifest",
     "./icon-192.svg",
     "./icon-512.svg"
@@ -42,7 +42,7 @@ self.addEventListener("fetch", (event) => {
                     caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
                     return response;
                 })
-                .catch(() => caches.match("./meal_planner_summer.html"));
+                .catch(() => caches.match("./index.html"));
         })
     );
 });
