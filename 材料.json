@@ -145,14 +145,12 @@
     { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true },
     { "name": "豆腐", "amount": 0.5, "unit": "丁", "cat": "other" }
   ],
-  "鶏肉と野菜のガリバタ": [
-    { "name": "鶏肉", "amount": 250, "unit": "g", "cat": "meat" },
-    { "name": "ブロッコリー", "amount": 0.5, "unit": "個", "cat": "veg" },
-    { "name": "じゃがいも", "amount": 1, "unit": "個", "cat": "veg", "long": true }
+  "厚揚げとひき肉のあんかけ": [
+    { "name": "厚揚げ", "amount": 1, "unit": "枚", "cat": "other" },
+    { "name": "ひき肉", "amount": 150, "unit": "g", "cat": "meat" }
   ],
-  "具沢山のコンソメスープ": [
-    { "name": "ほうれん草", "amount": 0.5, "unit": "袋", "cat": "veg", "long": true },
-    { "name": "ベーコン", "amount": 2, "unit": "枚", "cat": "meat" }
+  "きのこご飯": [
+    { "name": "きのこ", "amount": 1, "unit": "P", "cat": "veg", "long": true }
   ],
   "豚キムチ": [
     { "name": "豚こま", "amount": 200, "unit": "g", "cat": "meat" },
@@ -168,13 +166,12 @@
     { "name": "大根", "amount": 3, "unit": "cm", "cat": "veg", "long": true },
     { "name": "しらす", "amount": 1, "unit": "P", "cat": "other" }
   ],
-  "カオマンガイ": [
-    { "name": "鶏肉", "amount": 300, "unit": "g", "cat": "meat" },
-    { "name": "きゅうり", "amount": 1, "unit": "本", "cat": "veg", "long": true }
+  "ガーリックシュリンプ": [
+    { "name": "むきえび", "amount": 250, "unit": "g", "cat": "fish" }
   ],
-  "青菜と油揚げのお味噌汁": [
-    { "name": "小松菜", "amount": 0.3, "unit": "束", "cat": "veg" },
-    { "name": "油揚げ", "amount": 1, "unit": "枚", "cat": "other" }
+  "ジャンバラヤ": [
+    { "name": "ピーマン", "amount": 2, "unit": "個", "cat": "veg", "long": true },
+    { "name": "ウインナー", "amount": 1, "unit": "袋", "cat": "meat" }
   ],
   "豚丼": [
     { "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" },
@@ -207,8 +204,8 @@
     { "name": "きゅうり", "amount": 0.5, "unit": "本", "cat": "veg", "long": true },
     { "name": "ハム", "amount": 4, "unit": "枚", "cat": "meat", "long": true }
   ],
-  "鶏肉とナスのさっぱり煮": [
-    { "name": "鶏肉", "amount": 250, "unit": "g", "cat": "meat" },
+  "ひき肉とナスの味噌炒め": [
+    { "name": "ひき肉", "amount": 250, "unit": "g", "cat": "meat" },
     { "name": "茄子", "amount": 2, "unit": "本", "cat": "veg", "long": true }
   ],
   "きゅうりとしらすの和え物": [
@@ -274,8 +271,8 @@
   "海藻サラダ": [
     { "name": "海藻ミックス", "amount": 1, "unit": "袋", "cat": "other" }
   ],
-  "スペアリブ": [
-    { "name": "豚スペアリブ", "amount": 5, "unit": "本", "cat": "meat" }
+  "チキン南蛮": [
+    { "name": "鶏肉", "amount": 250, "unit": "g", "cat": "meat" }
   ],
   "タコとセロリのマリネ": [
     { "name": "タコ", "amount": 100, "unit": "g", "cat": "fish" },
