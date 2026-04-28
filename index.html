@@ -279,13 +279,13 @@
             render();
         };
 
-        window.toggleMealSelection = (week, dayIndex, optionsStr) => {
+        window.toggleMealSelection = (week, dayIndex, optionsStr, slot) => {
             const options = optionsStr.split('/');
-            const key = `w${week}-d${dayIndex}`;
+            const key = `w${week}-d${dayIndex}-${slot}`;
             const current = selectedMeals[key] || options[0];
             const nextIndex = (options.indexOf(current) + 1) % options.length;
             selectedMeals[key] = options[nextIndex];
-            saveToLocal(); 
+            saveToLocal();
             render();
         };
 
@@ -312,11 +312,12 @@
             if (window.pendingReset === "current") {
                 const prefix = `w${currentWeek}-`;
                 Object.keys(savedChecks).forEach(k => { if (k.startsWith(prefix)) delete savedChecks[k]; });
+                Object.keys(selectedMeals).forEach(k => { if (k.startsWith(prefix)) delete selectedMeals[k]; });
             } else {
                 savedChecks = {};
                 selectedMeals = {};
             }
-            saveToLocal(); 
+            saveToLocal();
             render();
             window.closeModal();
         };
@@ -349,11 +350,11 @@
                         <div class="flex-grow min-w-0">
                             <p class="text-sm font-bold text-slate-800 flex items-center flex-wrap">
                                 <span class="truncate">${mainDisp}</span>
-                                ${isMainMultiple ? `<button onclick="toggleMealSelection(${currentWeek}, ${idx}, '${item.main}')" class="ml-2 text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-100 no-print">切替</button>` : ''}
+                                ${isMainMultiple ? `<button onclick="toggleMealSelection(${currentWeek}, ${idx}, ${JSON.stringify(item.main)}, 'm')" class="ml-2 text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-100 no-print">切替</button>` : ''}
                             </p>
                             <p class="text-xs text-slate-500 flex items-center mt-0.5 flex-wrap">
                                 <span class="truncate">${sideDisp || '-'}</span>
-                                ${isSideMultiple ? `<button onclick="toggleMealSelection(${currentWeek}, ${idx}, '${item.side}')" class="ml-2 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 no-print">切替</button>` : ''}
+                                ${isSideMultiple ? `<button onclick="toggleMealSelection(${currentWeek}, ${idx}, ${JSON.stringify(item.side)}, 's')" class="ml-2 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 no-print">切替</button>` : ''}
                             </p>
                         </div>
                     </div>`;
@@ -403,8 +404,11 @@
             if (!originalStr) return "";
             const options = originalStr.split('/');
             if (options.length === 1) return options[0];
-            const key = `w${week}-d${dayIdx}`;
-            return selectedMeals[key] || options[0];
+            const slot = type === "main" ? "m" : "s";
+            const key = `w${week}-d${dayIdx}-${slot}`;
+            const picked = selectedMeals[key];
+            if (picked && options.includes(picked)) return picked;
+            return options[0];
         }
 
         function aggregateIntoMap(map, ing, dishName) {
