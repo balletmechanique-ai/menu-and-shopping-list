@@ -22,19 +22,19 @@
       "monday": { "main": "オムライス", "side": "ブロッコリーとツナのサラダ" },
       "tuesday": { "main": "餃子", "side": "もやしと人参のナムル" },
       "wednesday": { "main": "アジの南蛮漬け", "side": "具沢山のお味噌汁" },
-      "thursday": { "main": "鶏肉と野菜のガリバタ", "side": "具沢山のコンソメスープ" },
+      "thursday": { "main": "厚揚げとひき肉のあんかけ", "side": "きのこご飯" },
       "friday": { "main": "豚キムチ", "side": "冷奴" },
       "saturday": { "main": "ピザ", "side": "豆とツナのサラダ" },
       "sunday": { "main": "唐揚げ", "side": "大根おろしとしらすの和え物" }
     },
     "week_4": {
-      "monday": { "main": "カオマンガイ", "side": "青菜と油揚げのお味噌汁" },
+      "monday": { "main": "ハヤシライス", "side": "ポテトサラダ" },
       "tuesday": { "main": "豚丼", "side": "もやしサラダ" },
       "wednesday": { "main": "ハンバーグ/ロコモコ", "side": "大根と人参のサラダ" },
       "thursday": { "main": "回鍋肉", "side": "春雨サラダ" },
-      "friday": { "main": "鶏肉とナスのさっぱり煮", "side": "きゅうりとしらすの和え物" },
+      "friday": { "main": "ひき肉とナスの味噌炒め", "side": "きゅうりとしらすの和え物" },
       "saturday": { "main": "そば/うどん", "side": "かき揚げ" },
-      "sunday": { "main": "ハヤシライス", "side": "ポテトサラダ" }
+      "sunday": { "main": "ガーリックシュリンプ", "side": "ジャンバラヤ" }
     },
     "week_5": {
       "monday": { "main": "煎り鶏", "side": "豆腐とわかめのお味噌汁" },
@@ -43,7 +43,7 @@
       "thursday": { "main": "ナスと挽肉のトマトパスタ", "side": "レタスとツナのサラダ" },
       "friday": { "main": "シチュー", "side": "海藻サラダ" },
       "saturday": { "main": "好きなもの", "side": "" },
-      "sunday": { "main": "スペアリブ", "side": "タコとセロリのマリネ" }
+      "sunday": { "main": "チキン南蛮", "side": "タコとセロリのマリネ" }
     }
   }
 }
