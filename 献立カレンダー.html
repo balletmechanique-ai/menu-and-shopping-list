@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja" data-season="autumn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>献立カレンダー</title>
+    <meta name="theme-color" content="#9a3412">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+        :root { --page:#f4fafb; --primary:#0891b2; --dark:#155e75; --soft:#cffafe; --border:#a8c9d4; --week:#dceef2; }
+        html[data-season="autumn"] { --page:#faf7f0; --primary:#9a3412; --dark:#7c2d12; --soft:#f5e7d3; --border:#d6b98c; --week:#ead7bd; }
+        body { font-family:'Noto Sans JP',sans-serif; background:var(--page); color:#4a5a62; line-height:1.1; transition:background-color 180ms ease; }
+        .season-title { color:var(--dark); }
+        .season-switcher { border-color:var(--border); }
+        .season-button.active { color:white; background:var(--primary); }
+        .print-button { background:var(--primary); }
+        .print-button:hover { filter:brightness(.9); }
+        .table-frame { border-color:var(--border); }
+        .calendar-table { border-collapse:collapse; width:100%; table-layout:fixed; background:white; border-radius:8px; overflow:hidden; }
+        .calendar-table th,.calendar-table td { border:1px solid var(--border); text-align:center; vertical-align:middle; padding:2px; }
+        .corner-header { background:var(--soft); color:var(--dark); }
+        .day-header { font-size:.9rem; font-weight:bold; padding:10px 0!important; color:#2d4a52; }
+        .col-mon,.bg-mon { background:#eef8f6; }
+        .col-tue,.bg-tue { background:#f0f7fc; }
+        .col-wed,.bg-wed { background:#fbfdf0; }
+        .col-thu,.bg-thu { background:#fff8f0; }
+        .col-fri,.bg-fri { background:#eef6f8; }
+        .col-sat,.bg-sat { background:#eaf4ff; }
+        .col-sun,.bg-sun { background:#fff5f7; }
+        html[data-season="autumn"] .col-mon,html[data-season="autumn"] .bg-mon { background:#f4ecdc; }
+        html[data-season="autumn"] .col-tue,html[data-season="autumn"] .bg-tue { background:#f8eee4; }
+        html[data-season="autumn"] .col-wed,html[data-season="autumn"] .bg-wed { background:#f2efd9; }
+        html[data-season="autumn"] .col-thu,html[data-season="autumn"] .bg-thu { background:#f7e5d6; }
+        html[data-season="autumn"] .col-fri,html[data-season="autumn"] .bg-fri { background:#eee7dc; }
+        html[data-season="autumn"] .col-sat,html[data-season="autumn"] .bg-sat { background:#e8edf2; }
+        html[data-season="autumn"] .col-sun,html[data-season="autumn"] .bg-sun { background:#f5e2df; }
+        .week-label { background:var(--week); font-weight:bold; font-size:1rem; width:45px; color:var(--dark); border-right:2px solid var(--border)!important; }
+        .main-dish-container { min-height:3em; display:flex; align-items:center; justify-content:center; padding:4px; }
+        .main-dish-text { font-weight:700; font-size:.85rem; color:#333; }
+        .side-dish-container { font-size:.72rem; color:#5d5d5d; padding:5px 2px; background:#fff; border-top:1px solid var(--border); }
+        .week-group-border { border-top:4px solid var(--border)!important; }
+        @media print {
+            @page { size:A4 landscape; margin:5mm; }
+            body { background:white; padding:0; margin:0; }
+            .no-print { display:none!important; }
+            .container { max-width:100%!important; width:100%!important; padding:0!important; margin:0!important; }
+            .main-dish-text { font-size:.95rem; }
+            .side-dish-container { font-size:.78rem; }
+            .calendar-table { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+        }
+    </style>
+</head>
+<body class="p-2 md:p-4">
+    <main class="max-w-full mx-auto container">
+        <div class="flex flex-wrap justify-between items-end gap-3 mb-3 no-print">
+            <div>
+                <h1 class="season-title text-lg font-bold ml-1 italic">Kitchen Menu Calendar · <span id="season-icon">🍁</span> <span id="season-name">秋</span></h1>
+                <div class="season-switcher inline-flex rounded-xl bg-white p-1 border mt-2" aria-label="季節を選択">
+                    <button type="button" data-season="summer" class="season-button px-4 py-2 rounded-lg text-sm font-bold" aria-pressed="false">🌻 夏</button>
+                    <button type="button" data-season="autumn" class="season-button px-4 py-2 rounded-lg text-sm font-bold active" aria-pressed="true">🍁 秋</button>
+                </div>
+            </div>
+            <button type="button" onclick="window.print()" class="print-button text-white px-5 py-2 rounded-full shadow-sm flex items-center gap-2 text-sm font-bold transition-all">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                きれいに印刷する
+            </button>
+        </div>
+        <div class="table-frame shadow-md rounded-md overflow-hidden border">
+            <table class="calendar-table">
+                <thead><tr><th class="corner-header text-[10px]" style="width:40px">週</th><th class="day-header col-mon">月</th><th class="day-header col-tue">火</th><th class="day-header col-wed">水</th><th class="day-header col-thu">木</th><th class="day-header col-fri">金</th><th class="day-header col-sat">土</th><th class="day-header col-sun">日</th></tr></thead>
+                <tbody id="calendar-body"></tbody>
+            </table>
+        </div>
+    </main>
+    <script>
+        const MENUS = {
+            summer: [
+                [["厚揚げピーマン味噌炒め","きんぴらごぼう"],["焼き魚","浅漬けと味噌汁"],["麻婆茄子 / 麻婆豆腐","小松菜の胡麻和え"],["タンドリーチキン","ミネストローネ"],["豚こまスタミナ炒め","青菜の卵とじ味噌汁"],["クリスピーピザ","豆とツナのサラダ"],["冷しゃぶ","大根とツナのサラダ"]],
+                [["とんかつ","きのこのお味噌汁"],["生姜焼き","もやし和え"],["カレー","キャベツと人参のコールスロー"],["チキングリル","豆とひじきのサラダ"],["ガパオライス","きゅうりとちくわの和え物"],["好きなもの","—"],["ビビンバ","わかめスープ"]],
+                [["オムライス","ブロッコリーとツナのサラダ"],["餃子","もやしと人参のナムル"],["アジの南蛮漬け","具沢山のお味噌汁"],["厚揚げとひき肉のあんかけ","きのこご飯"],["豚キムチ","冷奴"],["ピザ","豆とツナのサラダ"],["唐揚げ","大根おろしとしらすの和え物"]],
+                [["ハヤシライス","ポテトサラダ"],["豚丼","もやしサラダ"],["ハンバーグ / ロコモコ","大根と人参のサラダ"],["回鍋肉","春雨サラダ"],["ひき肉とナスの味噌炒め","きゅうりとしらすの和え物"],["そば / うどん","かき揚げ"],["ガーリックシュリンプ","ジャンバラヤ"]],
+                [["煎り鶏","豆腐とわかめのお味噌汁"],["ポークチャップ","ナスのトロトロ煮浸し"],["フライ / コロッケ","レタスとツナのサラダ"],["ナスと挽肉のトマトパスタ","レタスとツナのサラダ"],["シチュー","海藻サラダ"],["好きなもの","—"],["チキン南蛮","タコとセロリのマリネ"]]
+            ],
+            autumn: [
+                [["厚揚げピーマン味噌炒め","きんぴらごぼう"],["焼き魚","浅漬けと味噌汁"],["麻婆茄子 / 麻婆豆腐","小松菜の胡麻和え"],["タンドリーチキン","ミネストローネ"],["豚こまスタミナ炒め","青菜の卵とじ味噌汁"],["クリスピーピザ","豆とツナのサラダ"],["豚肉と秋ナスのポン酢炒め","大根とツナのサラダ"]],
+                [["とんかつ","きのこのお味噌汁"],["生姜焼き","もやしとちくわの和えもの"],["カレー","キャベツと人参のコールスロー"],["チキングリル","豆とひじきのサラダ"],["ガパオライス / タコライス","タイ風春雨サラダ"],["好きなもの","—"],["ビビンバ","わかめスープ"]],
+                [["オムライス","ブロッコリーとツナのサラダ"],["餃子","もやしと人参のナムル"],["煮魚","具沢山のお味噌汁"],["厚揚げとひき肉のあんかけ","きのこご飯"],["豚キムチ","揚げ出し豆腐"],["ピザ","豆とツナのサラダ"],["唐揚げ","大根おろしとしらすの和え物"]],
+                [["ハヤシライス","ポテトサラダ"],["豚丼","もやしサラダ"],["ハンバーグ / ロコモコ","大根と人参のサラダ"],["回鍋肉","春雨サラダ"],["ひき肉とナスの味噌炒め","大根としらすの和え物"],["そば / うどん","かき揚げ"],["ガーリックシュリンプ","ジャンバラヤ"]],
+                [["肉じゃが","豆腐とわかめのお味噌汁"],["ポークチャップ","ナスのトロトロ煮浸し"],["フライ / コロッケ","レタスとツナのサラダ"],["ナスと挽肉のトマトパスタ","レタスとツナのサラダ"],["シチュー","海藻サラダ"],["好きなもの","—"],["チキン南蛮","タコとセロリのマリネ"]]
+            ]
+        };
+        const SEASONS = { summer:{name:"夏",icon:"🌻",color:"#0891b2"}, autumn:{name:"秋",icon:"🍁",color:"#9a3412"} };
+        const DAY_CLASSES = ["bg-mon","bg-tue","bg-wed","bg-thu","bg-fri","bg-sat","bg-sun"];
+        let currentSeason = localStorage.getItem("meal_calendar_season") || localStorage.getItem("meal_planner_season") || "autumn";
+        if (!MENUS[currentSeason]) currentSeason = "autumn";
+
+        function renderCalendar() {
+            const season = SEASONS[currentSeason];
+            document.documentElement.dataset.season = currentSeason;
+            document.title = `5週間の献立表（${season.name}）`;
+            document.querySelector('meta[name="theme-color"]').content = season.color;
+            document.getElementById("season-icon").textContent = season.icon;
+            document.getElementById("season-name").textContent = season.name;
+            document.querySelectorAll(".season-button").forEach(button => {
+                const active = button.dataset.season === currentSeason;
+                button.classList.toggle("active", active);
+                button.setAttribute("aria-pressed", String(active));
+            });
+            document.getElementById("calendar-body").innerHTML = MENUS[currentSeason].map((week, weekIndex) => {
+                const borderClass = weekIndex ? "week-group-border" : "";
+                const mains = week.map((day, dayIndex) => `<td class="${DAY_CLASSES[dayIndex]}"><div class="main-dish-container"><span class="main-dish-text">${day[0]}</span></div></td>`).join("");
+                const sides = week.map(day => `<td><div class="side-dish-container">${day[1] || "—"}</div></td>`).join("");
+                return `<tr class="${borderClass}"><td rowspan="2" class="week-label">${weekIndex + 1}</td>${mains}</tr><tr>${sides}</tr>`;
+            }).join("");
+        }
+
+        document.querySelectorAll(".season-button").forEach(button => button.addEventListener("click", () => {
+            currentSeason = button.dataset.season;
+            localStorage.setItem("meal_calendar_season", currentSeason);
+            renderCalendar();
+        }));
+        renderCalendar();
+    </script>
+</body>
+</html>

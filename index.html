@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-season="autumn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>夏の献立＆お買い物リスト</title>
+    <title>季節の献立＆お買い物リスト</title>
     <meta name="theme-color" content="#f97316">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="夏の献立">
+    <meta name="apple-mobile-web-app-title" content="季節の献立">
     <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="icon" type="image/svg+xml" href="./icon-192.svg">
-    <link rel="apple-touch-icon" href="./icon-192.svg">
+    <link rel="icon" type="image/png" href="./icon-192.png">
+    <link rel="apple-touch-icon" href="./icon-192.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         // --- データ統合 (JSONをスクリプト内に配置) ---
-        const MENU_DATA = {
+        const SUMMER_MENU_DATA = {
             "meal_plan": {
                 "week_1": {
                     "monday": {
@@ -169,6 +169,61 @@
             }
         };
 
+        const AUTUMN_MENU_DATA = {
+            "meal_plan": {
+                "week_1": {
+                    "monday": {"main":"厚揚げピーマン味噌炒め","side":"きんぴらごぼう"},
+                    "tuesday": {"main":"焼き魚","side":"浅漬けと味噌汁"},
+                    "wednesday": {"main":"麻婆茄子/麻婆豆腐","side":"小松菜の胡麻和え"},
+                    "thursday": {"main":"タンドリーチキン","side":"ミネストローネ"},
+                    "friday": {"main":"豚こまスタミナ炒め","side":"青菜の卵とじ味噌汁"},
+                    "saturday": {"main":"クリスピーピザ","side":"豆とツナのサラダ"},
+                    "sunday": {"main":"豚肉と秋ナスのポン酢炒め","side":"大根とツナのサラダ"}
+                },
+                "week_2": {
+                    "monday": {"main":"とんかつ","side":"きのこのお味噌汁"},
+                    "tuesday": {"main":"生姜焼き","side":"もやしとちくわの和えもの"},
+                    "wednesday": {"main":"カレー","side":"キャベツと人参のコールスロー"},
+                    "thursday": {"main":"チキングリル","side":"豆とひじきのサラダ"},
+                    "friday": {"main":"ガパオライス/タコライス","side":"タイ風春雨サラダ"},
+                    "saturday": {"main":"好きなもの","side":""},
+                    "sunday": {"main":"ビビンバ","side":"わかめスープ"}
+                },
+                "week_3": {
+                    "monday": {"main":"オムライス","side":"ブロッコリーとツナのサラダ"},
+                    "tuesday": {"main":"餃子","side":"もやしと人参のナムル"},
+                    "wednesday": {"main":"煮魚","side":"具沢山のお味噌汁"},
+                    "thursday": {"main":"厚揚げとひき肉のあんかけ","side":"きのこご飯"},
+                    "friday": {"main":"豚キムチ","side":"揚げ出し豆腐"},
+                    "saturday": {"main":"ピザ","side":"豆とツナのサラダ"},
+                    "sunday": {"main":"唐揚げ","side":"大根おろしとしらすの和え物"}
+                },
+                "week_4": {
+                    "monday": {"main":"ハヤシライス","side":"ポテトサラダ"},
+                    "tuesday": {"main":"豚丼","side":"もやしサラダ"},
+                    "wednesday": {"main":"ハンバーグ/ロコモコ","side":"大根と人参のサラダ"},
+                    "thursday": {"main":"回鍋肉","side":"春雨サラダ"},
+                    "friday": {"main":"ひき肉とナスの味噌炒め","side":"大根としらすの和え物"},
+                    "saturday": {"main":"そば/うどん","side":"かき揚げ"},
+                    "sunday": {"main":"ガーリックシュリンプ","side":"ジャンバラヤ"}
+                },
+                "week_5": {
+                    "monday": {"main":"肉じゃが","side":"豆腐とわかめのお味噌汁"},
+                    "tuesday": {"main":"ポークチャップ","side":"ナスのトロトロ煮浸し"},
+                    "wednesday": {"main":"フライ/コロッケ","side":"レタスとツナのサラダ"},
+                    "thursday": {"main":"ナスと挽肉のトマトパスタ","side":"レタスとツナのサラダ"},
+                    "friday": {"main":"シチュー","side":"海藻サラダ"},
+                    "saturday": {"main":"好きなもの","side":""},
+                    "sunday": {"main":"チキン南蛮","side":"タコとセロリのマリネ"}
+                }
+            }
+        };
+
+        const SEASONS = {
+            summer: { label: "夏", icon: "🌻", themeColor: "#f97316", menu: SUMMER_MENU_DATA },
+            autumn: { label: "秋", icon: "🍁", themeColor: "#9a3412", menu: AUTUMN_MENU_DATA }
+        };
+
         const INGREDIENTS = {
             "うどん": [{"name":"うどん","amount":2,"unit":"玉","cat":"other"}],
             "かき揚げ": [{"name":"かき揚げ(市販)","amount":1,"unit":"P","cat":"other"}],
@@ -238,15 +293,34 @@
             "餃子": [{"name":"餃子","amount":1,"unit":"P","cat":"other"}],
             "麻婆茄子": [{"name":"茄子","amount":3,"unit":"本","cat":"veg","long":true},{"name":"ひき肉","amount":150,"unit":"g","cat":"meat"},{"name":"長ねぎ","amount":0.5,"unit":"本","cat":"veg","long":true}],
             "麻婆豆腐": [{"name":"豆腐","amount":1,"unit":"丁","cat":"other"},{"name":"ひき肉","amount":150,"unit":"g","cat":"meat"},{"name":"長ねぎ","amount":0.5,"unit":"本","cat":"veg","long":true}]
+            ,"豚肉と秋ナスのポン酢炒め": [{"name":"豚こま","amount":250,"unit":"g","cat":"meat"},{"name":"茄子","amount":3,"unit":"本","cat":"veg","long":true}]
+            ,"もやしとちくわの和えもの": [{"name":"もやし","amount":1,"unit":"袋","cat":"other"},{"name":"ちくわ","amount":2,"unit":"本","cat":"other"}]
+            ,"タコライス": [{"name":"ひき肉","amount":250,"unit":"g","cat":"meat"},{"name":"レタス","amount":0.25,"unit":"個","cat":"veg","long":true},{"name":"トマト","amount":1,"unit":"個","cat":"veg"},{"name":"ピザ用チーズ","amount":1,"unit":"適量","cat":"other"}]
+            ,"タイ風春雨サラダ": [{"name":"春雨","amount":40,"unit":"g","cat":"other"},{"name":"乾燥きくらげ","amount":5,"unit":"g","cat":"other"},{"name":"人参","amount":0.25,"unit":"本","cat":"veg","long":true}]
+            ,"煮魚": [{"name":"旬の魚","amount":3,"unit":"切","cat":"fish"}]
+            ,"揚げ出し豆腐": [{"name":"豆腐","amount":1,"unit":"丁","cat":"other"}]
+            ,"大根としらすの和え物": [{"name":"大根","amount":3,"unit":"cm","cat":"veg","long":true},{"name":"しらす","amount":1,"unit":"P","cat":"other"}]
+            ,"肉じゃが": [{"name":"豚こま","amount":250,"unit":"g","cat":"meat"},{"name":"じゃがいも","amount":3,"unit":"個","cat":"veg","long":true},{"name":"人参","amount":0.5,"unit":"本","cat":"veg","long":true},{"name":"玉ねぎ","amount":1,"unit":"個","cat":"veg","long":true}]
         };
 
         // --- 状態管理 ---
-        let savedChecks = JSON.parse(localStorage.getItem('meal_planner_summer_checks') || "{}");
-        let selectedMeals = JSON.parse(localStorage.getItem('meal_planner_summer_selected') || "{}");
+        let currentSeason = localStorage.getItem('meal_planner_season') || "autumn";
+        if (!SEASONS[currentSeason]) currentSeason = "autumn";
+        let savedChecks = {};
+        let selectedMeals = {};
+
+        function storageKey(type) {
+            return `meal_planner_${currentSeason}_${type}`;
+        }
+
+        function loadSeasonState() {
+            savedChecks = JSON.parse(localStorage.getItem(storageKey('checks')) || "{}");
+            selectedMeals = JSON.parse(localStorage.getItem(storageKey('selected')) || "{}");
+        }
 
         function saveToLocal() {
-            localStorage.setItem('meal_planner_summer_checks', JSON.stringify(savedChecks));
-            localStorage.setItem('meal_planner_summer_selected', JSON.stringify(selectedMeals));
+            localStorage.setItem(storageKey('checks'), JSON.stringify(savedChecks));
+            localStorage.setItem(storageKey('selected'), JSON.stringify(selectedMeals));
         }
 
         let currentWeek = 1;
@@ -255,10 +329,16 @@
         let RAW_DATA = [];
 
         function initData() {
+            loadSeasonState();
+            applySeason();
+        }
+
+        function applySeason() {
+            const season = SEASONS[currentSeason];
             // RAW_DATA形式に変換
-            RAW_DATA = Object.keys(MENU_DATA.meal_plan).map(key => {
+            RAW_DATA = Object.keys(season.menu.meal_plan).map(key => {
                 const weekNum = parseInt(key.replace('week_', ''));
-                const days = MENU_DATA.meal_plan[key];
+                const days = season.menu.meal_plan[key];
                 const menu = [
                     { day: "月", ...days.monday },
                     { day: "火", ...days.tuesday },
@@ -270,8 +350,22 @@
                 ];
                 return { week: weekNum, menu };
             });
+            document.documentElement.dataset.season = currentSeason;
+            document.title = `${season.label}の献立＆お買い物リスト`;
+            document.querySelector('meta[name="theme-color"]').content = season.themeColor;
+            document.getElementById('season-icon').textContent = season.icon;
+            document.getElementById('season-name').textContent = season.label;
+            document.getElementById('footer-season').textContent = season.label;
             render();
         }
+
+        window.changeSeason = (seasonName) => {
+            if (!SEASONS[seasonName] || seasonName === currentSeason) return;
+            currentSeason = seasonName;
+            localStorage.setItem('meal_planner_season', currentSeason);
+            loadSeasonState();
+            applySeason();
+        };
 
         window.toggleCheck = (id) => {
             savedChecks[id] = document.getElementById(id).checked;
@@ -279,7 +373,11 @@
             render();
         };
 
-        window.toggleMealSelection = (week, dayIndex, optionsStr, slot) => {
+        window.toggleMealSelection = (week, dayIndex, slot) => {
+            const weekData = RAW_DATA.find(data => data.week === week);
+            const menuItem = weekData?.menu[dayIndex];
+            const optionsStr = slot === 'm' ? menuItem?.main : menuItem?.side;
+            if (!optionsStr || !optionsStr.includes('/')) return;
             const options = optionsStr.split('/');
             const key = `w${week}-d${dayIndex}-${slot}`;
             const current = selectedMeals[key] || options[0];
@@ -324,6 +422,12 @@
 
         function render() {
             if (RAW_DATA.length === 0) return;
+
+            document.querySelectorAll('[data-season-button]').forEach(button => {
+                const active = button.dataset.seasonButton === currentSeason;
+                button.classList.toggle('season-active', active);
+                button.setAttribute('aria-pressed', String(active));
+            });
             
             for(let i=1; i<=5; i++) {
                 const tab = document.getElementById(`tab-${i}`);
@@ -343,18 +447,18 @@
                 const isSideMultiple = item.side && item.side.includes('/');
                 
                 const div = document.createElement('div');
-                div.className = "bg-white p-3 rounded-xl shadow-sm border border-slate-100 mb-2";
+                div.className = "menu-card p-3 rounded-xl shadow-sm mb-2";
                 div.innerHTML = `
                     <div class="flex items-center space-x-3">
-                        <span class="w-8 h-8 flex items-center justify-center bg-orange-100 rounded-full text-xs font-bold text-orange-600 flex-shrink-0">${item.day}</span>
+                        <span class="day-badge w-8 h-8 flex items-center justify-center rounded-full text-xs font-bold flex-shrink-0">${item.day}</span>
                         <div class="flex-grow min-w-0">
                             <p class="text-sm font-bold text-slate-800 flex items-center flex-wrap">
                                 <span class="truncate">${mainDisp}</span>
-                                ${isMainMultiple ? `<button onclick="toggleMealSelection(${currentWeek}, ${idx}, ${JSON.stringify(item.main)}, 'm')" class="ml-2 text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-100 no-print">切替</button>` : ''}
+                                ${isMainMultiple ? `<button type="button" onclick="toggleMealSelection(${currentWeek}, ${idx}, 'm')" class="ml-2 text-[10px] bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-100 no-print">切替</button>` : ''}
                             </p>
                             <p class="text-xs text-slate-500 flex items-center mt-0.5 flex-wrap">
                                 <span class="truncate">${sideDisp || '-'}</span>
-                                ${isSideMultiple ? `<button onclick="toggleMealSelection(${currentWeek}, ${idx}, ${JSON.stringify(item.side)}, 's')" class="ml-2 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 no-print">切替</button>` : ''}
+                                ${isSideMultiple ? `<button type="button" onclick="toggleMealSelection(${currentWeek}, ${idx}, 's')" class="ml-2 text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded border border-slate-200 no-print">切替</button>` : ''}
                             </p>
                         </div>
                     </div>`;
@@ -445,13 +549,42 @@
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+        :root {
+            --season-bg: #fffaf0;
+            --season-primary: #f97316;
+            --season-primary-dark: #c2410c;
+            --season-soft: #ffedd5;
+            --season-soft-strong: #fed7aa;
+            --season-border: #fdba74;
+            --season-card: #ffffff;
+        }
+        html[data-season="autumn"] {
+            --season-bg: #faf7f0;
+            --season-primary: #9a3412;
+            --season-primary-dark: #7c2d12;
+            --season-soft: #f5e7d3;
+            --season-soft-strong: #e7c9a1;
+            --season-border: #d6b98c;
+            --season-card: #fffdf8;
+        }
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
-            background-color: #fffaf0; 
+            background-color: var(--season-bg);
+            transition: background-color 180ms ease;
             -webkit-tap-highlight-color: transparent; 
             overscroll-behavior-y: contain;
         }
-        .tab-active { border-bottom: 3px solid #f97316; color: #f97316; }
+        .season-title { color: var(--season-primary-dark); }
+        .season-switcher { border-color: var(--season-border); }
+        .season-active { background: var(--season-primary); color: white; border-color: var(--season-primary); box-shadow: 0 1px 3px rgb(0 0 0 / 0.12); }
+        .tab-active { border-bottom: 3px solid var(--season-primary); color: var(--season-primary); }
+        .menu-card { background: var(--season-card); border: 1px solid var(--season-soft-strong); }
+        .day-badge { background: var(--season-soft); color: var(--season-primary-dark); }
+        .season-action { background: var(--season-soft); color: var(--season-primary-dark); border-color: var(--season-border); }
+        .season-action:active { background: var(--season-soft-strong); }
+        .co-op-card { background: var(--season-soft); border-color: var(--season-soft-strong); }
+        .co-op-title { color: var(--season-primary-dark); border-color: var(--season-border); }
+        .co-op-badge { background: var(--season-soft-strong); color: var(--season-primary-dark); }
         @media print { .no-print { display: none !important; } }
         /* カスタムスクロールバーの非表示（モバイル向け） */
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -461,11 +594,19 @@
 <body class="p-4 sm:p-8 text-slate-900">
     <div id="app" class="max-w-4xl mx-auto">
         <header class="mb-6">
-            <h1 class="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">🌻 夏の献立カレンダー</h1>
-            <p class="text-slate-500 text-xs sm:text-sm mt-1">野菜たっぷり・平日野菜は生協へ</p>
+            <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                    <h1 class="season-title text-2xl sm:text-3xl font-bold tracking-tight"><span id="season-icon">🍁</span> <span id="season-name">秋</span>の献立カレンダー</h1>
+                    <p class="text-slate-500 text-xs sm:text-sm mt-1">野菜たっぷり・平日野菜は生協へ</p>
+                </div>
+                <div class="season-switcher flex rounded-xl bg-white p-1 border no-print" aria-label="季節を選択">
+                    <button type="button" data-season-button="summer" onclick="changeSeason('summer')" class="px-3 py-1.5 rounded-lg border border-transparent text-sm font-bold text-slate-600 transition" aria-pressed="false">🌻 夏</button>
+                    <button type="button" data-season-button="autumn" onclick="changeSeason('autumn')" class="px-3 py-1.5 rounded-lg border border-transparent text-sm font-bold text-slate-600 transition" aria-pressed="true">🍁 秋</button>
+                </div>
+            </div>
             
             <div class="flex gap-2 mt-4 no-print overflow-x-auto no-scrollbar">
-                <button onclick="resetCurrentWeek()" class="whitespace-nowrap bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg text-xs font-medium border border-orange-200 active:bg-orange-100 transition">今週クリア</button>
+                <button onclick="resetCurrentWeek()" class="season-action whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium border transition">今週クリア</button>
                 <button onclick="resetAllData()" class="whitespace-nowrap bg-red-50 text-red-600 px-3 py-1.5 rounded-lg text-xs font-medium border border-red-200 active:bg-red-100 transition">全リセット</button>
                 <button onclick="window.print()" class="whitespace-nowrap bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium active:bg-slate-300">印刷</button>
             </div>
@@ -496,10 +637,10 @@
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
                     <!-- 生協 -->
-                    <div class="bg-orange-50 border border-orange-100 rounded-3xl p-5 shadow-sm">
-                        <h3 class="text-orange-700 font-bold mb-4 text-sm sm:text-base border-b border-orange-200 pb-2 flex items-center justify-between">
+                    <div class="co-op-card border rounded-3xl p-5 shadow-sm">
+                        <h3 class="co-op-title font-bold mb-4 text-sm sm:text-base border-b pb-2 flex items-center justify-between">
                             生協 (月〜金野菜)
-                            <span class="text-[10px] font-normal bg-orange-200 text-orange-800 px-2 py-0.5 rounded-full">配送</span>
+                            <span class="co-op-badge text-[10px] font-normal px-2 py-0.5 rounded-full">配送</span>
                         </h3>
                         <ul id="seikyo-list" class="space-y-1 text-sm"></ul>
                     </div>
@@ -518,7 +659,7 @@
 
         <!-- コピーライト/フッター -->
         <footer class="mt-12 text-center text-slate-400 text-[10px] pb-8">
-            Summer Meal Planner v2.0 - Local Storage Enabled
+            <span id="footer-season">秋</span>の献立 - Local Storage Enabled
         </footer>
     </div>
 

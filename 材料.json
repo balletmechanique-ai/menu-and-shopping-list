@@ -277,5 +277,40 @@
   "タコとセロリのマリネ": [
     { "name": "タコ", "amount": 100, "unit": "g", "cat": "fish" },
     { "name": "セロリ", "amount": 0.5, "unit": "本", "cat": "veg" }
+  ],
+  "豚肉と秋ナスのポン酢炒め": [
+    { "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" },
+    { "name": "茄子", "amount": 3, "unit": "本", "cat": "veg", "long": true }
+  ],
+  "もやしとちくわの和えもの": [
+    { "name": "もやし", "amount": 1, "unit": "袋", "cat": "other" },
+    { "name": "ちくわ", "amount": 2, "unit": "本", "cat": "other" }
+  ],
+  "タコライス": [
+    { "name": "ひき肉", "amount": 250, "unit": "g", "cat": "meat" },
+    { "name": "レタス", "amount": 0.25, "unit": "個", "cat": "veg", "long": true },
+    { "name": "トマト", "amount": 1, "unit": "個", "cat": "veg" },
+    { "name": "ピザ用チーズ", "amount": 1, "unit": "適量", "cat": "other" }
+  ],
+  "タイ風春雨サラダ": [
+    { "name": "春雨", "amount": 40, "unit": "g", "cat": "other" },
+    { "name": "乾燥きくらげ", "amount": 5, "unit": "g", "cat": "other" },
+    { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true }
+  ],
+  "煮魚": [
+    { "name": "旬の魚", "amount": 3, "unit": "切", "cat": "fish" }
+  ],
+  "揚げ出し豆腐": [
+    { "name": "豆腐", "amount": 1, "unit": "丁", "cat": "other" }
+  ],
+  "大根としらすの和え物": [
+    { "name": "大根", "amount": 3, "unit": "cm", "cat": "veg", "long": true },
+    { "name": "しらす", "amount": 1, "unit": "P", "cat": "other" }
+  ],
+  "肉じゃが": [
+    { "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" },
+    { "name": "じゃがいも", "amount": 3, "unit": "個", "cat": "veg", "long": true },
+    { "name": "人参", "amount": 0.5, "unit": "本", "cat": "veg", "long": true },
+    { "name": "玉ねぎ", "amount": 1, "unit": "個", "cat": "veg", "long": true }
   ]
 }

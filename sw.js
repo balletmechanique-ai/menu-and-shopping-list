@@ -1,6 +1,6 @@
-const CACHE_NAME = "meal-planner-summer-v4";
+const CACHE_NAME = "meal-planner-seasons-v6";
 /** オフライン用にキャッシュする静的アセット（index.html は除外 — 常に最新の献立を取得するため） */
-const APP_SHELL = ["./manifest.webmanifest", "./icon-192.svg", "./icon-512.svg"];
+const APP_SHELL = ["./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
