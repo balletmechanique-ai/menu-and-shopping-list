@@ -316,6 +316,8 @@
         function loadSeasonState() {
             savedChecks = JSON.parse(localStorage.getItem(storageKey('checks')) || "{}");
             selectedMeals = JSON.parse(localStorage.getItem(storageKey('selected')) || "{}");
+            const savedWeek = Number(localStorage.getItem(storageKey('week')));
+            currentWeek = Number.isInteger(savedWeek) && savedWeek >= 1 && savedWeek <= 5 ? savedWeek : 1;
         }
 
         function saveToLocal() {
@@ -387,7 +389,11 @@
             render();
         };
 
-        window.changeWeek = (w) => { currentWeek = w; render(); };
+        window.changeWeek = (w) => {
+            currentWeek = w;
+            localStorage.setItem(storageKey('week'), String(currentWeek));
+            render();
+        };
         window.changePrevWeekSource = (w) => { prevWeekSource = w; render(); };
 
         window.resetCurrentWeek = () => {
