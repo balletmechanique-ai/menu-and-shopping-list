@@ -1,4 +1,4 @@
-const CACHE_NAME = "meal-planner-seasons-v6";
+const CACHE_NAME = "meal-planner-seasons-v7";
 /** オフライン用にキャッシュする静的アセット（index.html は除外 — 常に最新の献立を取得するため） */
 const APP_SHELL = ["./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
