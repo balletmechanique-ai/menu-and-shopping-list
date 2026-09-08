@@ -551,7 +551,21 @@
             });
         }
 
-        window.onload = initData;
+        // 初期表示は画像や外部 CSS の完了を待たず、DOM の準備ができた時点で復元する。
+        // `window.onload` だけにすると、PWA を開き直した直後などに第1週のまま
+        // 描画されることがある。
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initData, { once: true });
+        } else {
+            initData();
+        }
+
+        // bfcache から戻った場合も、保存済みの表示週を再同期する。
+        window.addEventListener('pageshow', (event) => {
+            if (!event.persisted) return;
+            loadSeasonState();
+            applySeason();
+        });
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
