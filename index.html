@@ -219,9 +219,165 @@
             }
         };
 
+        const WINTER_MENU_DATA = {
+            "meal_plan": {
+                "week_1": {
+                    "monday": {
+                        "main": "厚揚げピーマン味噌炒め",
+                        "side": "きんぴらごぼう"
+                    },
+                    "tuesday": {
+                        "main": "焼き魚",
+                        "side": "具沢山のお味噌汁"
+                    },
+                    "wednesday": {
+                        "main": "麻婆豆腐",
+                        "side": "小松菜の胡麻和え"
+                    },
+                    "thursday": {
+                        "main": "タンドリーチキン",
+                        "side": "ミネストローネ"
+                    },
+                    "friday": {
+                        "main": "豚こまスタミナ炒め",
+                        "side": "青菜の卵とじ味噌汁"
+                    },
+                    "saturday": {
+                        "main": "クリスピーピザ",
+                        "side": "豆とツナのサラダ"
+                    },
+                    "sunday": {
+                        "main": "豚肉と白菜のポン酢炒め",
+                        "side": "大根とツナのサラダ"
+                    }
+                },
+                "week_2": {
+                    "monday": {
+                        "main": "とんかつ",
+                        "side": "きのこのお味噌汁"
+                    },
+                    "tuesday": {
+                        "main": "生姜焼き",
+                        "side": "もやしとちくわの和えもの"
+                    },
+                    "wednesday": {
+                        "main": "カレー",
+                        "side": "キャベツと人参のコールスロー"
+                    },
+                    "thursday": {
+                        "main": "チキングリル",
+                        "side": "豆とひじきのサラダ"
+                    },
+                    "friday": {
+                        "main": "ガパオライス/タコライス",
+                        "side": "タイ風春雨サラダ"
+                    },
+                    "saturday": {
+                        "main": "好きなもの",
+                        "side": ""
+                    },
+                    "sunday": {
+                        "main": "ビビンバ",
+                        "side": "わかめスープ"
+                    }
+                },
+                "week_3": {
+                    "monday": {
+                        "main": "オムライス",
+                        "side": "ブロッコリーとツナのサラダ"
+                    },
+                    "tuesday": {
+                        "main": "餃子",
+                        "side": "もやしと人参のナムル"
+                    },
+                    "wednesday": {
+                        "main": "煮魚",
+                        "side": "具沢山のお味噌汁"
+                    },
+                    "thursday": {
+                        "main": "厚揚げとひき肉のあんかけ",
+                        "side": "きのこご飯"
+                    },
+                    "friday": {
+                        "main": "豚キムチ",
+                        "side": "揚げ出し豆腐"
+                    },
+                    "saturday": {
+                        "main": "ピザ",
+                        "side": "豆とツナのサラダ"
+                    },
+                    "sunday": {
+                        "main": "唐揚げ",
+                        "side": "大根おろしとしらすの和え物"
+                    }
+                },
+                "week_4": {
+                    "monday": {
+                        "main": "ハヤシライス",
+                        "side": "ポテトサラダ"
+                    },
+                    "tuesday": {
+                        "main": "豚丼",
+                        "side": "もやし和え"
+                    },
+                    "wednesday": {
+                        "main": "ハンバーグ/ロコモコ",
+                        "side": "大根と人参のサラダ"
+                    },
+                    "thursday": {
+                        "main": "回鍋肉",
+                        "side": "豆腐とわかめのお味噌汁"
+                    },
+                    "friday": {
+                        "main": "ひき肉と大根の味噌炒め",
+                        "side": "大根としらすの和え物"
+                    },
+                    "saturday": {
+                        "main": "そば/うどん",
+                        "side": "かき揚げ"
+                    },
+                    "sunday": {
+                        "main": "ガーリックシュリンプ",
+                        "side": "ジャンバラヤ"
+                    }
+                },
+                "week_5": {
+                    "monday": {
+                        "main": "肉じゃが",
+                        "side": "豆腐とわかめのお味噌汁"
+                    },
+                    "tuesday": {
+                        "main": "ポークチャップ",
+                        "side": "かぶのそぼろあん"
+                    },
+                    "wednesday": {
+                        "main": "フライ/コロッケ",
+                        "side": "ブロッコリーとツナのサラダ"
+                    },
+                    "thursday": {
+                        "main": "きのことベーコンのクリームパスタ",
+                        "side": "温野菜"
+                    },
+                    "friday": {
+                        "main": "シチュー",
+                        "side": "海藻サラダ"
+                    },
+                    "saturday": {
+                        "main": "好きなもの",
+                        "side": ""
+                    },
+                    "sunday": {
+                        "main": "チキン南蛮",
+                        "side": "タコとセロリのマリネ"
+                    }
+                }
+            }
+        };
+
         const SEASONS = {
             summer: { label: "夏", icon: "🌻", themeColor: "#f97316", menu: SUMMER_MENU_DATA },
-            autumn: { label: "秋", icon: "🍁", themeColor: "#9a3412", menu: AUTUMN_MENU_DATA }
+            autumn: { label: "秋", icon: "🍁", themeColor: "#9a3412", menu: AUTUMN_MENU_DATA },
+            winter: { label: "冬", icon: "❄️", themeColor: "#2563a6", menu: WINTER_MENU_DATA }
         };
 
         const INGREDIENTS = {
@@ -292,7 +448,7 @@
             "青菜の卵とじ味噌汁": [{"name":"小松菜","amount":0.5,"unit":"束","cat":"veg"}],
             "餃子": [{"name":"餃子","amount":1,"unit":"P","cat":"other"}],
             "麻婆茄子": [{"name":"茄子","amount":3,"unit":"本","cat":"veg","long":true},{"name":"ひき肉","amount":150,"unit":"g","cat":"meat"},{"name":"長ねぎ","amount":0.5,"unit":"本","cat":"veg","long":true}],
-            "麻婆豆腐": [{"name":"豆腐","amount":1,"unit":"丁","cat":"other"},{"name":"ひき肉","amount":150,"unit":"g","cat":"meat"},{"name":"長ねぎ","amount":0.5,"unit":"本","cat":"veg","long":true}]
+            "麻婆豆腐": [{"name":"豆腐","amount":1,"unit":"丁","cat":"other"},{"name":"ひき肉","amount":150,"unit":"g","cat":"meat"}]
             ,"豚肉と秋ナスのポン酢炒め": [{"name":"豚こま","amount":250,"unit":"g","cat":"meat"},{"name":"茄子","amount":3,"unit":"本","cat":"veg","long":true}]
             ,"もやしとちくわの和えもの": [{"name":"もやし","amount":1,"unit":"袋","cat":"other"},{"name":"ちくわ","amount":2,"unit":"本","cat":"other"}]
             ,"タコライス": [{"name":"ひき肉","amount":250,"unit":"g","cat":"meat"},{"name":"レタス","amount":0.25,"unit":"個","cat":"veg","long":true},{"name":"トマト","amount":1,"unit":"個","cat":"veg"},{"name":"ピザ用チーズ","amount":1,"unit":"適量","cat":"other"}]
@@ -622,6 +778,7 @@
                 <div class="season-switcher flex rounded-xl bg-white p-1 border no-print" aria-label="季節を選択">
                     <button type="button" data-season-button="summer" onclick="changeSeason('summer')" class="px-3 py-1.5 rounded-lg border border-transparent text-sm font-bold text-slate-600 transition" aria-pressed="false">🌻 夏</button>
                     <button type="button" data-season-button="autumn" onclick="changeSeason('autumn')" class="px-3 py-1.5 rounded-lg border border-transparent text-sm font-bold text-slate-600 transition" aria-pressed="true">🍁 秋</button>
+                    <button type="button" data-season-button="winter" onclick="changeSeason('winter')" class="px-3 py-1.5 rounded-lg border border-transparent text-sm font-bold text-slate-600 transition" aria-pressed="false">❄️ 冬</button>
                 </div>
             </div>
             

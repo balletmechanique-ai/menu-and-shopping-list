@@ -10,6 +10,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
         :root { --page:#f4fafb; --primary:#0891b2; --dark:#155e75; --soft:#cffafe; --border:#a8c9d4; --week:#dceef2; }
         html[data-season="autumn"] { --page:#faf7f0; --primary:#9a3412; --dark:#7c2d12; --soft:#f5e7d3; --border:#d6b98c; --week:#ead7bd; }
+        html[data-season="winter"] { --page:#f1f6fb; --primary:#2563a6; --dark:#1e3a5f; --soft:#e3effa; --border:#a9c6e2; --week:#d9e8f5; }
         body { font-family:'Noto Sans JP',sans-serif; background:var(--page); color:#4a5a62; line-height:1.1; transition:background-color 180ms ease; }
         .season-title { color:var(--dark); }
         .season-switcher { border-color:var(--border); }
@@ -59,6 +60,7 @@
                 <div class="season-switcher inline-flex rounded-xl bg-white p-1 border mt-2" aria-label="季節を選択">
                     <button type="button" data-season="summer" class="season-button px-4 py-2 rounded-lg text-sm font-bold" aria-pressed="false">🌻 夏</button>
                     <button type="button" data-season="autumn" class="season-button px-4 py-2 rounded-lg text-sm font-bold active" aria-pressed="true">🍁 秋</button>
+                    <button type="button" data-season="winter" class="season-button px-4 py-2 rounded-lg text-sm font-bold" aria-pressed="false">❄️ 冬</button>
                 </div>
             </div>
             <button type="button" onclick="window.print()" class="print-button text-white px-5 py-2 rounded-full shadow-sm flex items-center gap-2 text-sm font-bold transition-all">
@@ -88,9 +90,161 @@
                 [["オムライス","ブロッコリーとツナのサラダ"],["餃子","もやしと人参のナムル"],["煮魚","具沢山のお味噌汁"],["厚揚げとひき肉のあんかけ","きのこご飯"],["豚キムチ","揚げ出し豆腐"],["ピザ","豆とツナのサラダ"],["唐揚げ","大根おろしとしらすの和え物"]],
                 [["ハヤシライス","ポテトサラダ"],["豚丼","もやしサラダ"],["ハンバーグ / ロコモコ","大根と人参のサラダ"],["回鍋肉","春雨サラダ"],["ひき肉とナスの味噌炒め","大根としらすの和え物"],["そば / うどん","かき揚げ"],["ガーリックシュリンプ","ジャンバラヤ"]],
                 [["肉じゃが","豆腐とわかめのお味噌汁"],["ポークチャップ","ナスのトロトロ煮浸し"],["フライ / コロッケ","レタスとツナのサラダ"],["ナスと挽肉のトマトパスタ","レタスとツナのサラダ"],["シチュー","海藻サラダ"],["好きなもの","—"],["チキン南蛮","タコとセロリのマリネ"]]
+            ],
+            winter: [
+                [
+                    [
+                        "厚揚げピーマン味噌炒め",
+                        "きんぴらごぼう"
+                    ],
+                    [
+                        "焼き魚",
+                        "具沢山のお味噌汁"
+                    ],
+                    [
+                        "麻婆豆腐",
+                        "小松菜の胡麻和え"
+                    ],
+                    [
+                        "タンドリーチキン",
+                        "ミネストローネ"
+                    ],
+                    [
+                        "豚こまスタミナ炒め",
+                        "青菜の卵とじ味噌汁"
+                    ],
+                    [
+                        "クリスピーピザ",
+                        "豆とツナのサラダ"
+                    ],
+                    [
+                        "豚肉と白菜のポン酢炒め",
+                        "大根とツナのサラダ"
+                    ]
+                ],
+                [
+                    [
+                        "とんかつ",
+                        "きのこのお味噌汁"
+                    ],
+                    [
+                        "生姜焼き",
+                        "もやしとちくわの和えもの"
+                    ],
+                    [
+                        "カレー",
+                        "キャベツと人参のコールスロー"
+                    ],
+                    [
+                        "チキングリル",
+                        "豆とひじきのサラダ"
+                    ],
+                    [
+                        "ガパオライス / タコライス",
+                        "タイ風春雨サラダ"
+                    ],
+                    [
+                        "好きなもの",
+                        "—"
+                    ],
+                    [
+                        "ビビンバ",
+                        "わかめスープ"
+                    ]
+                ],
+                [
+                    [
+                        "オムライス",
+                        "ブロッコリーとツナのサラダ"
+                    ],
+                    [
+                        "餃子",
+                        "もやしと人参のナムル"
+                    ],
+                    [
+                        "煮魚",
+                        "具沢山のお味噌汁"
+                    ],
+                    [
+                        "厚揚げとひき肉のあんかけ",
+                        "きのこご飯"
+                    ],
+                    [
+                        "豚キムチ",
+                        "揚げ出し豆腐"
+                    ],
+                    [
+                        "ピザ",
+                        "豆とツナのサラダ"
+                    ],
+                    [
+                        "唐揚げ",
+                        "大根おろしとしらすの和え物"
+                    ]
+                ],
+                [
+                    [
+                        "ハヤシライス",
+                        "ポテトサラダ"
+                    ],
+                    [
+                        "豚丼",
+                        "もやし和え"
+                    ],
+                    [
+                        "ハンバーグ / ロコモコ",
+                        "大根と人参のサラダ"
+                    ],
+                    [
+                        "回鍋肉",
+                        "豆腐とわかめのお味噌汁"
+                    ],
+                    [
+                        "ひき肉と大根の味噌炒め",
+                        "大根としらすの和え物"
+                    ],
+                    [
+                        "そば / うどん",
+                        "かき揚げ"
+                    ],
+                    [
+                        "ガーリックシュリンプ",
+                        "ジャンバラヤ"
+                    ]
+                ],
+                [
+                    [
+                        "肉じゃが",
+                        "豆腐とわかめのお味噌汁"
+                    ],
+                    [
+                        "ポークチャップ",
+                        "かぶのそぼろあん"
+                    ],
+                    [
+                        "フライ / コロッケ",
+                        "ブロッコリーとツナのサラダ"
+                    ],
+                    [
+                        "きのことベーコンのクリームパスタ",
+                        "温野菜"
+                    ],
+                    [
+                        "シチュー",
+                        "海藻サラダ"
+                    ],
+                    [
+                        "好きなもの",
+                        "—"
+                    ],
+                    [
+                        "チキン南蛮",
+                        "タコとセロリのマリネ"
+                    ]
+                ]
             ]
         };
-        const SEASONS = { summer:{name:"夏",icon:"🌻",color:"#0891b2"}, autumn:{name:"秋",icon:"🍁",color:"#9a3412"} };
+        const SEASONS = { summer:{name:"夏",icon:"🌻",color:"#0891b2"}, autumn:{name:"秋",icon:"🍁",color:"#9a3412"}, winter:{name:"冬",icon:"❄️",color:"#2563a6"} };
         const DAY_CLASSES = ["bg-mon","bg-tue","bg-wed","bg-thu","bg-fri","bg-sat","bg-sun"];
         let currentSeason = localStorage.getItem("meal_calendar_season") || localStorage.getItem("meal_planner_season") || "autumn";
         if (!MENUS[currentSeason]) currentSeason = "autumn";
