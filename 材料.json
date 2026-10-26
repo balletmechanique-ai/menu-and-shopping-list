@@ -41,6 +41,7 @@
   "豚こまスタミナ炒め": [
     { "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" },
     { "name": "ニラ", "amount": 0.5, "unit": "束", "cat": "veg" },
+    { "name": "小松菜", "amount": 0.5, "unit": "束", "cat": "veg" },
     { "name": "もやし", "amount": 1, "unit": "袋", "cat": "other" }
   ],
   "青菜の卵とじ味噌汁": [
@@ -115,7 +116,7 @@
   ],
   "ビビンバ": [
     { "name": "豚こま", "amount": 200, "unit": "g", "cat": "meat" },
-    { "name": "ほうれん草", "amount": 0.5, "unit": "束", "cat": "veg" },
+    { "name": "小松菜", "amount": 0.5, "unit": "束", "cat": "veg" },
     { "name": "人参", "amount": 0.3, "unit": "本", "cat": "veg", "long": true }
   ],
   "わかめスープ": [
@@ -132,8 +133,9 @@
     { "name": "餃子", "amount": 1, "unit": "P", "cat": "other" }
   ],
   "もやしと人参のナムル": [
+    { "name": "小松菜", "amount": 0.5, "unit": "束", "cat": "veg" },
     { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true },
-    { "name": "もやし", "amount": 1, "unit": "袋", "cat": "other" }
+    { "name": "もやし", "amount": 0.5, "unit": "袋", "cat": "other" }
   ],
   "アジの南蛮漬け": [
     { "name": "アジ", "amount": 3, "unit": "匹", "cat": "fish" },
@@ -143,7 +145,8 @@
   "具沢山のお味噌汁": [
     { "name": "大根", "amount": 3, "unit": "cm", "cat": "veg", "long": true },
     { "name": "人参", "amount": 0.25, "unit": "本", "cat": "veg", "long": true },
-    { "name": "豆腐", "amount": 0.5, "unit": "丁", "cat": "other" }
+    { "name": "豆腐", "amount": 0.5, "unit": "丁", "cat": "other" },
+    { "name": "小松菜", "amount": 0.5, "unit": "束", "cat": "veg" }
   ],
   "厚揚げとひき肉のあんかけ": [
     { "name": "厚揚げ", "amount": 1, "unit": "枚", "cat": "other" },
@@ -154,7 +157,8 @@
   ],
   "豚キムチ": [
     { "name": "豚こま", "amount": 200, "unit": "g", "cat": "meat" },
-    { "name": "キムチ", "amount": 1, "unit": "P", "cat": "other" }
+    { "name": "キムチ", "amount": 1, "unit": "P", "cat": "other" },
+    { "name": "小松菜", "amount": 0.5, "unit": "束", "cat": "veg" }
   ],
   "冷奴": [
     { "name": "豆腐", "amount": 1, "unit": "丁", "cat": "other" }
@@ -238,7 +242,8 @@
   ],
   "豆腐とわかめのお味噌汁": [
     { "name": "豆腐", "amount": 0.5, "unit": "丁", "cat": "other" },
-    { "name": "乾燥わかめ", "amount": 1, "unit": "適量", "cat": "other" }
+    { "name": "乾燥わかめ", "amount": 1, "unit": "適量", "cat": "other" },
+    { "name": "小松菜", "amount": 0.5, "unit": "束", "cat": "veg" }
   ],
   "ポークチャップ": [
     { "name": "豚こま", "amount": 250, "unit": "g", "cat": "meat" }
